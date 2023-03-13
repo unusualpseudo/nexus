@@ -1,3 +1,9 @@
+variable "repo_name" {
+  description = "The name of the repository"
+  type        = string
+  default     = "nexus"
+}
+
 variable "description" {
   description = "A description of the repository"
   type        = string
@@ -16,10 +22,16 @@ variable "visibility" {
   default     = "public"
 }
 
-variable "repo_name" {
-  description = "The name of the repository"
-  type        = string
-  default     = "nexus"
+variable "has_issues" {
+  description = "Enable issues on repository"
+  type        = bool
+  default     = true
+}
+
+variable "has_discussions" {
+  description = "Enable discusions on repository"
+  type        = bool
+  default     = true
 }
 
 variable "archive_on_destroy" {
@@ -41,3 +53,27 @@ variable "auto_init" {
   type    = bool
   default = true
 }
+
+variable "allow_merge_commit" {
+  type    = bool
+  default = false
+}
+
+
+variable "allow_auto_merge" {
+  type    = bool
+  default = false
+}
+
+
+variable "allow_squash_merge" {
+  type    = bool
+  default = false
+}
+
+variable "allow_rebase_merge" {
+  type    = bool
+  default = true
+}
+
+
