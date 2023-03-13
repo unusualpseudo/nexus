@@ -1,0 +1,39 @@
+---
+version: "3"
+
+tasks:
+  github:init:
+    desc: Init Github repository provision
+    dir: infrastructure/terraform/github
+    cmds:
+      - terraform init -input=false
+
+  github:plan:
+    desc: Github repository provision execution plan
+    dir: infrastructure/terraform/github
+    cmds:
+      - terraform plan -input=false
+
+  github:apply:
+    desc: Provision Github repository
+    dir: infrastructure/terraform/github
+    cmds:
+      - terraform apply -input=false -auto-approve
+
+  cloudflare:init:
+    desc: Init Cloudflare domain provision
+    dir: infrastructure/terraform/cloudflare
+    cmds:
+      - terraform init -input=false
+
+  cloudflare:plan:
+    desc: Cloudflare domain provision execution plan
+    dir: infrastructure/terraform/cloudflare
+    cmds:
+      - terraform plan -input=false
+
+  cloudflare:apply:
+    desc: Provision Cloudflare domain
+    dir: infrastructure/terraform/cloudflare
+    cmds:
+      - terraform apply -input=false -auto-approve
