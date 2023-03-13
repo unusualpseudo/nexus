@@ -1,0 +1,14 @@
+---
+- name: Install fail2ban
+  apt:
+    name: fail2ban
+    state: latest
+    update_cache: true
+
+- name: Define fail2ban ssh policy
+  copy:
+    src: ../templates/jail.local.j2
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: 0644

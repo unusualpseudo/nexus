@@ -1,0 +1,21 @@
+---
+- name: Check if mitigations is disabled
+  shell: grep "GRUB_CMDLINE_LINUX=" /etc/default/grub | grep -c "mitigations=off"
+  register: mitigations_status
+  ignore_errors: true
+
+- name: Disable mitigations
+  replace:
+    path: "/etc/default/grub"
+    regexp: '^(GRUB_CMDLINE_LINUX=(?:(?![" ]{{ option | regex_escape }}=).)*)(?:[" ]{{ option | regex_escape }}=\S+)?(.*")$'
+    replace: '\1 {{ option }}={{ value }}\2'
+  vars:
+    option: mitigations
+    value: "off"
+  when:
+    - mitigations_status.stdout == "0"
+
+- name: Run grub-mkconfig
+  command: update-grub
+  when:
+    - mitigations_status.stdout == "0"

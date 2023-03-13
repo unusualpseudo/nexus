@@ -1,0 +1,15 @@
+---
+- name: Restart sshd
+  service:
+    name: sshd
+    state: restarted
+
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: true
+
+- name: Rebuild locales database
+  command: "{{ item }}"
+  with_items:
+    - dpkg-reconfigure locales -f noninteractive
+    - /usr/sbin/locale-gen

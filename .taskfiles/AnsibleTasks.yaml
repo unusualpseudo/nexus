@@ -1,0 +1,43 @@
+---
+version: "3"
+
+vars:
+  ANSIBLE_PLAYBOOK_DIR: "{{.ANSIBLE_DIR}}/playbooks"
+  ANSIBLE_INVENTORY_DIR: "{{.ANSIBLE_DIR}}/inventory"
+
+tasks:
+  init:
+    desc: Install/Upgrade Ansible galaxy dependencies
+    dir: "{{.ANSIBLE_DIR}}"
+    cmds:
+      - ansible-galaxy install -r requirements.yaml --roles-path ~/.ansible/roles --force
+      - ansible-galaxy collection install -r requirements.yaml --collections-path ~/.ansible/collections --force
+
+  list:
+    desc: List all hosts
+    dir: "{{.ANSIBLE_DIR}}"
+    cmds:
+      - ansible all --list-hosts
+
+  ping:
+    desc: Ping all hosts
+    cmds:
+      - ansible all -m 'ping'
+
+  uptime:
+    desc: Uptime of all hosts
+    cmds:
+      - ansible all --one-line -a 'uptime'
+
+
+  pve:reboot:
+    desc: Reboot Proxmox
+    dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
+    cmds:
+      - ansible-playbook proxmox/reboot.yaml
+
+  pve:setup:
+    desc: Setup PVE
+    dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
+    cmds:
+      - ansible-playbook proxmox/setup.yaml

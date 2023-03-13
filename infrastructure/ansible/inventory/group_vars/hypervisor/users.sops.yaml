@@ -1,0 +1,27 @@
+root_password: ENC[AES256_GCM,data:jaYwgtxXMcb/BTp0+aMvgzJAQtMUpRmwXL9kgT+psSurowv1pFQ=,iv:bdDQ8Lr37Sx2okSSRVeDpXgR0YO7mSWoLuqHh+pY7i0=,tag:i7ffeqmiTHaA0ymugqt/PQ==,type:str]
+pam_user: ENC[AES256_GCM,data:NmMCcy4=,iv:5np/P8G4ge2/fDzf2Dij2SkzsywkNGzHQV/I61/sqns=,tag:fitAHyNa7eTJThrINsWUpA==,type:str]
+pam_user_password: ENC[AES256_GCM,data:540s97+COB6nxvbpxthex0Evc/lJKSShyKTP,iv:j+hkr3RP9RQeEWWyFaPzdz/0dmr7uSaN4HzGrKhT6RA=,tag:mxjqkU56hRk8m5zJde88Fw==,type:str]
+pve_terraform_user: ENC[AES256_GCM,data:WEbUoSPB9quA,iv:Y5Vio06BzfEvTH2QzDS6M9wuQLbOqtCqOaFnsBiWFAI=,tag:v1NJZcFpuekBMmz2i8pH3A==,type:str]
+pve_terraform_user_password: ENC[AES256_GCM,data:iZi6g9N2U5Z6G+SD7LAOWOu4vZKpTg2VdTz98WqpZ6OmfJRs6wo=,iv:HOf7ajRf2hBvha+AOheeXuDKJb+Qt4CxmR+VPqxHj9Y=,tag:5kwV1nE//sTSza+jX1ZESg==,type:str]
+pve_terraform_role: ENC[AES256_GCM,data:X2SROA2otd0w,iv:I2AfwK3H032k0sfhLNx432Er5upz5l7dLsqtl8+7feE=,tag:2UknGpACEQFlafyEa6VEIg==,type:str]
+pve_terraform_role_permissions: ENC[AES256_GCM,data:ya9KBT4a/v0GkDGa2tY7PQFGkKH/dbyn5UEGwECZtcibUYV6SYoCBZBJibmBiB+bvqEA7cu0xh7eQJHofY9p5gV6lTSvaOL2EMu6bIp2ppFSh/1pPoOhI3hqa+WofdpwuURQA0M+OK5myLNtmvHhYIoBJwfA4+kWWK4FMWNs0mMM8peYKAxEUSPCZYErbKsgZG7jN0WvaiwzZzZMr4ckfAOTmIMfWyz+zYFsjVb+iXBz7KeaHb3KU5MNmpaEmdF+jt/+vikq9u4GKj82mS4hsawxkE2qTMXBndBaX7Ky5iIwtk+Z,iv:Kk6uM0QaE3gdJBA8WG6WOcUApl1/4EbBOXBlFNutyl0=,tag:uzUqIa60U/pMi+krFD4mBw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1zqydytfsqv3g789ud2jjhrflk445wcadnz0fccrf82zhwfwcgd4q404rtr
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBXM2VKdDJRcy8yUUZvQ2Vn
+            bk4veDBaZnJyaDl1L3diMTVOYjV6OVBpWkNjCjhQWlVyWDRSaXJVa09KMmVmS1Qx
+            Ty91T3NsOVRIekJWRGlRWlBMd1A2NEUKLS0tIGgyNzRsSlRkWWlBZDZqNE9XTEp5
+            Nk4yYU5IcGxGaFgrSlE0aUtJanU2Mk0KeoNOxbPyC0gY6ZrAdDVUjYybUGJy49cU
+            Jtk2Fv2HNP+1PNBZqLuIdzvJKk22qkVcvA2cXiHkmP4r5LHkOw5i1g==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-03-12T18:35:02Z"
+    mac: ENC[AES256_GCM,data:WzIuOlvEt6AUrxU9F55yxpOMoAnE5TmcETp26T7E0QFJdKvBZXLTQpiA3j7kyT8DqFTGwdEWNoE3zWjbHa2ss8IRB83Yvh2iBM5ZZ2XKHbaODYA/TogE4a3cHbr2X+e79f8Yprdr+ekJhuHiykiyFkrxIo6/DjtosX7FTonmwlM=,iv:drgqazsXJkMQBWEJ50FvSJFCLj7W0b+E2L/0ODQAzV8=,tag:Aav/6g/xXh+apBDHNb7y+w==,type:str]
+    pgp: []
+    unencrypted_regex: ^(kind)$
+    version: 3.7.3
