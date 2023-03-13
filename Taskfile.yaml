@@ -1,0 +1,16 @@
+---
+version: "3"
+
+vars:
+  ANSIBLE_DIR: "{{.ROOT_DIR}}/infrastructure/ansible"
+
+env:
+  ANSIBLE_CONFIG: "{{.ANSIBLE_DIR}}/ansible.cfg"
+
+dotenv: [".envrc"]
+
+includes:
+  sops: ./.taskfiles/SopsTasks.yaml
+  terraform: ./.taskfiles/TerraformTasks.yaml
+  ansible: ./.taskfiles/AnsibleTasks.yaml
+  pre-commit: ./.taskfiles/PrecommitTasks.yaml
