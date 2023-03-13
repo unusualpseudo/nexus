@@ -1,6 +1,5 @@
 # Terraform
 .terraform
-.terraform.lock*
 .terraform.tfstate*
 terraform.tfstate*
 
