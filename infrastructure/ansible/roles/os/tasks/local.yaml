@@ -1,0 +1,24 @@
+---
+- name: select default locale
+  debconf:
+    name: locales
+    question: locales/default_environment_locale
+    value: en_US.UTF-8
+    vtype: select
+  notify:
+    - Rebuild locales database
+
+- name: /etc/locale.gen
+  lineinfile:
+    dest: /etc/locale.gen
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "{{ item.state }}"
+  with_items:
+    - {
+      regexp: "^#? ?en_US.UTF-8 UTF-8",
+      line: "en_US.UTF-8 UTF-8",
+      state: present,
+    }
+  notify:
+    - Rebuild locales database

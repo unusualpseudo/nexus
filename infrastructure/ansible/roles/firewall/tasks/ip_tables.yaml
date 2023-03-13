@@ -1,0 +1,89 @@
+---
+- name: Populate service facts
+  service_facts:
+
+- name: Disable UFW firewall
+  systemd:
+    name: ufw
+    state: stopped
+    enabled: false
+  when: "'ufw' in services"
+
+- name: Install iptables && netfilter-persistent && iptables-persistent packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - iptables
+    - iptables-persistent
+    - netfilter-persistent
+
+- name: Flush existing firewall
+  iptables:
+    flush: true
+
+- name: Firewall rule - allow all loopback traffic
+  iptables:
+    action: append
+    chain: INPUT
+    in_interface: lo
+    jump: ACCEPT
+
+- name: Firewall rule - allow established connections
+  iptables:
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+
+- name: Firewall rule - allow port ping traffic
+  iptables:
+    chain: INPUT
+    jump: ACCEPT
+    protocol: icmp
+
+- name: Firewall rule - allow port 22/SSH traffic
+  iptables:
+    chain: INPUT
+    destination_port: "22"
+    jump: ACCEPT
+    protocol: tcp
+
+- name: Firewall rule - allow port 80/HTTP traffic
+  iptables:
+    chain: INPUT
+    destination_port: "80"
+    jump: ACCEPT
+    protocol: tcp
+
+- name: Firewall rule - allow port 443/HTTPS traffic
+  iptables:
+    chain: INPUT
+    destination_port: "443"
+    jump: ACCEPT
+    protocol: tcp
+
+- name: Firewall rule - allow port 123/NTP traffic
+  iptables:
+    chain: INPUT
+    destination_port: "123"
+    jump: ACCEPT
+    protocol: tcp
+
+- name: Firewall rule - drop any traffic without rule
+  iptables:
+    chain: INPUT
+    jump: DROP
+
+# This will apply to all loaded/active IPv4 tables.
+- name: Save current state of the firewall in system file
+  community.general.iptables_state:
+    state: saved
+    path: /etc/sysconfig/iptables
+
+# This will apply only to IPv6 filter table.
+- name: Save current state of the firewall in system file
+  community.general.iptables_state:
+    ip_version: ipv6
+    table: filter
+    state: saved
+    path: /etc/iptables/rules.v6
