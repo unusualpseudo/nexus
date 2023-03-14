@@ -1,5 +1,5 @@
 ---
-name: "Pull Request Labeler"
+name: Pull Request Labeler
 
 on:
   workflow_dispatch:
@@ -8,7 +8,6 @@ on:
 
 jobs:
   labeler:
-    name: Labeler
     runs-on: ubuntu-latest
     steps:
       - name: Generate Token
