@@ -12,8 +12,15 @@ resource "github_actions_secret" "app_id_private_key" {
 }
 
 
-resource "github_actions_secret" "tf_api_token" {
+resource "github_actions_secret" "aws_acess_key_id" {
   repository      = github_repository.repo.name
-  secret_name     = "TF_API_TOKEN"
-  plaintext_value = data.sops_file.github.data["tf_api_token"]
+  secret_name     = "AWS_ACCESS_KEY_ID"
+  plaintext_value = data.sops_file.github.data["aws_acess_key_id"]
+}
+
+
+resource "github_actions_secret" "aws_secret_access_key" {
+  repository      = github_repository.repo.name
+  secret_name     = "AWS_SECRET_ACCESS_KEY"
+  plaintext_value = data.sops_file.github.data["aws_secret_access_key"]
 }
