@@ -33,9 +33,10 @@ resource "cloudflare_zone_settings_override" "cloudflare_settings" {
     pseudo_ipv4         = "off"
     ip_geolocation      = "on"
     # /content-protection
-    email_obfuscation   = "on"
-    server_side_exclude = "off"
-    hotlink_protection  = "off"
+    email_obfuscation       = "on"
+    server_side_exclude     = "off"
+    hotlink_protection      = "on"
+    origin_max_http_version = 2
     # /workers
     security_header {
       enabled = false
