@@ -1,5 +1,5 @@
 ---
-name: "Broken links checks"
+name: Broken links checks
 
 on:
   workflow_dispatch:
@@ -10,7 +10,6 @@ on:
 
 jobs:
   check:
-    name: Check broken links in the repo
     runs-on: ubuntu-latest
     steps:
       - name: Generate Token
