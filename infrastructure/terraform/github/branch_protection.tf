@@ -5,7 +5,7 @@ resource "github_branch_protection" "main" {
 
   pattern                 = "main"
   allows_deletions        = false
-  allows_force_pushes     = true
+  allows_force_pushes     = false
   required_linear_history = true
 
 
@@ -19,4 +19,16 @@ resource "github_branch_protection" "main" {
   required_status_checks {
     strict = true
   }
+}
+
+
+resource "github_branch_protection" "dev" {
+
+  repository_id = github_repository.repo.node_id
+
+  pattern                 = "dev"
+  allows_deletions        = false
+  allows_force_pushes     = true
+  required_linear_history = true
+
 }
