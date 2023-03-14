@@ -5,16 +5,36 @@ on:
     branches:
       - "main"
   pull_request:
-
+env:
+  SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 jobs:
+  directories:
+    name: Directory Changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: unusualpseudo/terraform-monorepo-action@master
+        id: directories
+      - run: echo ${{ steps.directories.outputs.modules }}
+    outputs:
+      dirs: ${{ steps.directories.outputs.modules }}
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
+    needs: directories
+    if: ${{ needs.directories.outputs.dirs != '' && toJson(fromJson(needs.directories.outputs.dirs)) != '[]' }}
+    strategy:
+      matrix:
+        directories: ${{ fromJson(needs.directories.outputs.dirs) }}
+    defaults:
+      run:
+        working-directory: ${{ matrix.directories }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Sops Binary Installer
+        id: sops
+        uses: mdgreenwald/mozilla-sops-action@v1.4.1
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1

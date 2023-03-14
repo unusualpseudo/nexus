@@ -1,7 +1,7 @@
 
 resource "github_actions_secret" "app_id_secret" {
-  repository       = github_repository.repo.name
-  secret_name      = "BOT_APP_ID"
+  repository      = github_repository.repo.name
+  secret_name     = "BOT_APP_ID"
   plaintext_value = data.sops_file.github.data["app_id"]
 }
 
