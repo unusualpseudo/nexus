@@ -10,10 +10,17 @@ terraform {
       version = "0.7.2"
     }
   }
+  backend "s3" {
+    bucket  = "nexus-terraform"
+    region  = "eu-west-3"
+    key     = "terraform/github"
+    encrypt = true
+  }
 }
 
 # Configure Github provider
 provider "github" {
+
   token = data.sops_file.github.data["token"]
   owner = data.sops_file.github.data["owner"]
 }

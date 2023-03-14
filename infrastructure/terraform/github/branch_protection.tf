@@ -5,7 +5,7 @@ resource "github_branch_protection" "main" {
 
   pattern                 = "main"
   allows_deletions        = false
-  allows_force_pushes     = false
+  allows_force_pushes     = true
   required_linear_history = true
 
 
