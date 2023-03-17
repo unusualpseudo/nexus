@@ -1,0 +1,31 @@
+resource "aws_budgets_budget" "cost" {
+  budget_type       = "COST"
+  limit_amount      = "1"
+  limit_unit        = "USD"
+  time_unit         = "DAILY"
+  time_period_start = "2023-03-18_00:00"
+
+  notification {
+    comparison_operator        = "GREATER_THAN"
+    threshold                  = 100
+    threshold_type             = "PERCENTAGE"
+    notification_type          = "ACTUAL"
+    subscriber_email_addresses = [data.sops_file.aws_secrets.data["notify_email"]]
+  }
+}
+
+
+resource "aws_budgets_budget" "s3" {
+  budget_type  = "USAGE"
+  limit_amount = "5"
+  limit_unit   = "GB"
+  time_unit    = "MONTHLY"
+  notification {
+    comparison_operator        = "GREATER_THAN"
+    threshold                  = 50
+    threshold_type             = "PERCENTAGE"
+    notification_type          = "FORECASTED"
+    subscriber_email_addresses = [data.sops_file.aws_secrets.data["notify_email"]]
+  }
+
+}

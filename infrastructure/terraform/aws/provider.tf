@@ -4,7 +4,12 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 4.0"
     }
+    sops = {
+      source  = "carlpett/sops"
+      version = "0.7.2"
+    }
   }
+
   backend "s3" {
     bucket  = "nexus-terraform"
     region  = "eu-west-3"

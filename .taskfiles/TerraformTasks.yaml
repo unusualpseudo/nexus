@@ -37,3 +37,21 @@ tasks:
     dir: infrastructure/terraform/cloudflare
     cmds:
       - terraform apply -input=false -auto-approve
+
+  aws:init:
+    desc: Init AWS provision
+    dir: infrastructure/terraform/aws
+    cmds:
+      - terraform init -input=false
+
+  aws:plan:
+    desc: AWS provision execution plan
+    dir: infrastructure/terraform/aws
+    cmds:
+      - terraform plan -input=false
+
+  aws:apply:
+    desc: Provision AWS ressources
+    dir: infrastructure/terraform/aws
+    cmds:
+      - terraform apply -input=false -auto-approve
