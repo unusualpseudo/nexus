@@ -24,3 +24,9 @@ resource "github_actions_secret" "aws_secret_access_key" {
   secret_name     = "AWS_SECRET_ACCESS_KEY"
   plaintext_value = data.sops_file.github.data["aws_secret_access_key"]
 }
+
+resource "github_actions_secret" "aws_region" {
+  repository      = github_repository.repo.name
+  secret_name     = "AWS_REGION"
+  plaintext_value = data.sops_file.github.data["aws_region"]
+}
