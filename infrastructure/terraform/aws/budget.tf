@@ -1,4 +1,5 @@
 resource "aws_budgets_budget" "cost" {
+  name              = "daily-cost"
   budget_type       = "COST"
   limit_amount      = "1"
   limit_unit        = "USD"
@@ -16,6 +17,7 @@ resource "aws_budgets_budget" "cost" {
 
 
 resource "aws_budgets_budget" "s3" {
+  name         = "s3-budget"
   budget_type  = "USAGE"
   limit_amount = "5"
   limit_unit   = "GB"
