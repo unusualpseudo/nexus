@@ -20,8 +20,6 @@ resource "aws_s3_bucket_versioning" "versioning" {
 
 }
 
-
-
 resource "aws_s3_bucket_public_access_block" "access" {
   bucket                  = aws_s3_bucket.terraform-state.id
   block_public_acls       = true
@@ -31,18 +29,14 @@ resource "aws_s3_bucket_public_access_block" "access" {
 }
 
 
-
 resource "aws_s3_bucket_lifecycle_configuration" "terraform-bucket-lifecycle" {
   bucket = aws_s3_bucket.terraform-state.id
 
   rule {
     id = "versions-expiration"
 
-    filter {
-      prefix = "terraform/"
-    }
     noncurrent_version_expiration {
-      noncurrent_days           = 15
+      noncurrent_days           = 10
       newer_noncurrent_versions = 3
     }
     status = "Enabled"
