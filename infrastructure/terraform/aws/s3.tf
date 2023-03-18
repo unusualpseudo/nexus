@@ -42,6 +42,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "terraform-bucket-lifecycle" {
       prefix = "terraform/"
     }
     noncurrent_version_expiration {
+      noncurrent_days           = 15
       newer_noncurrent_versions = 3
     }
     status = "Enabled"
