@@ -1,7 +1,11 @@
 ---
-area/ansible:
-  - "infrastructure/terraform/**/*"
-area/terraform:
+ansible:
   - "infrastructure/ansible/**/*"
-area/github:
+terraform/aws:
+  - "infrastructure/terraform/aws/*"
+terraform/cloudflare:
+  - "infrastructure/terraform/cloudflare/*"
+terraform/github:
+  - "infrastructure/terraform/github/*"
+github-actions:
   - ".github/**/*"
