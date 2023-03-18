@@ -76,4 +76,7 @@ variable "allow_rebase_merge" {
   default = true
 }
 
-
+variable "webhook_events" {
+  type    = list(string)
+  default = ["issues", "pull_request", "pull_request_review_comment", "code_scanning_alert", "installation", "push", "release", "watch", "status", "star", "fork", "branch_protection_rule", "create"]
+}
