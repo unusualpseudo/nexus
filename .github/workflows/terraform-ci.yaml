@@ -47,7 +47,8 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_wrapper: false
+          terraform_version: 1.1.9
+          terraform_wrapper: true
 
       - name: Terraform Format
         id: fmt
@@ -59,12 +60,13 @@ jobs:
 
       - name: Terraform Validate
         id: validate
-        run: terraform validate -no-color
+        run: terraform validate -no-color > plan.log
 
       - name: Terraform Plan
         if: github.event_name == 'pull_request'
         id: plan
-        run: terraform plan -input=false -no-color
+        run: |
+          terraform plan -input=false -no-color
         continue-on-error: true
 
       - name: Generate Token
@@ -75,6 +77,36 @@ jobs:
           app_id: "${{ secrets.BOT_APP_ID }}"
           private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
+      - name: Update Pull Request
+        id: comment
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        with:
+          github-token: "${{ steps.generate-token.outputs.token }}"
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
