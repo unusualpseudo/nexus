@@ -1,11 +1,4 @@
 ---
-- name: Change PVE source list
-  lineinfile:
-    path: "/etc/apt/sources.list.d/pve-enterprise.list"
-    regexp: "^(.*)deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise(.*)$"
-    line: "deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription"
-    backrefs: true
-
 - name: Upgrade all system packages
   apt:
     upgrade: full
@@ -76,7 +69,6 @@
         path: "{{ item }}"
       loop:
         - "/home/{{ ansible_user }}/.snap"
-        - "/snap"
         - "/var/snap"
         - "/var/lib/snapd"
         - "/var/cache/snapd"
@@ -87,4 +79,3 @@
     - apt_remove_packages is defined
     - apt_remove_packages is iterable
     - apt_remove_packages | length > 0
-    - not hypervisor
