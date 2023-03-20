@@ -34,7 +34,6 @@ apt_remove_packages:
   - popularity-contest
   - snapd
   - sosreport
-  - tmux
   - ubuntu-advantage-tools
   - ufw
   - vim.tiny

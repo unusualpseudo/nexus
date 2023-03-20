@@ -1,8 +1,0 @@
----
-- name: Proxmox Playbook
-  hosts: nexus
-  any_errors_fatal: true
-  vars:
-    hypervisor: true
-  roles:
-    - proxmox

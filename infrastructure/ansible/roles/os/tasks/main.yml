@@ -1,14 +1,16 @@
 ---
 - import_tasks: kernel.yaml
-  when: not hypervisor
 - import_tasks: grup.yaml
-  when: not hypervisor
 - import_tasks: filesystem.yaml
-  when: not hypervisor
 - import_tasks: network.yaml
-  when: not hypervisor
 - import_tasks: local.yaml
 - import_tasks: ntp.yaml
 - import_tasks: packages.yaml
 - import_tasks: ssh.yaml
+- name: "Create Linux user {{ sysadmin_user }}"
+  import_role:
+    name: users
+  vars:
+    username: "{{ sysadmin_user }}"
+    password: "{{ sysadmin_password }}"
 - meta: flush_handlers

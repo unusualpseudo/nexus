@@ -29,15 +29,8 @@ tasks:
     cmds:
       - ansible all --one-line -a 'uptime'
 
-
-  pve:reboot:
-    desc: Reboot Proxmox
+  k3s:setup:
+    desc: K3s Setup
     dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
     cmds:
-      - ansible-playbook proxmox/reboot.yaml
-
-  pve:setup:
-    desc: Setup PVE
-    dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
-    cmds:
-      - ansible-playbook proxmox/setup.yaml
+      - ansible-playbook k3s/setup.yaml
