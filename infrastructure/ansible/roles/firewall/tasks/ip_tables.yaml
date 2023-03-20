@@ -41,7 +41,7 @@
     jump: ACCEPT
     protocol: icmp
 
-- name: Firewall rule - allow port 22/SSH traffic
+- name: Firewall rule - allow SSH traffic
   iptables:
     chain: INPUT
     destination_port: "22"

@@ -1,6 +1,0 @@
----
-- include_role:
-    name: os
-- include_role:
-    name: firewall
-- import_tasks: users.yaml

@@ -1,6 +1,6 @@
 ---
 - name: "Enable kernel modules runtime"
-  community.general.modprobe:
+  modprobe:
     name: "{{ item }}"
     state: present
   loop:
@@ -9,7 +9,7 @@
     - rbd
 
 - name: "Enable kernel modules on boot"
-  ansible.builtin.copy:
+  copy:
     mode: 0644
     content: "{{ item }}"
     dest: "/etc/modules-load.d/{{ item }}.conf"
