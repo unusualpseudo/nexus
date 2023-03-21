@@ -1,4 +1,5 @@
 ---
 - import_tasks: download.yaml
 - import_tasks: install.yaml
+- import_tasks: post_install.yaml
 - meta: flush_handlers
