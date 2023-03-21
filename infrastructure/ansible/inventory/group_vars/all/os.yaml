@@ -37,6 +37,8 @@ apt_remove_packages:
   - ubuntu-advantage-tools
   - ufw
   - vim.tiny
+  - unattended-upgrades
+  - apparmor
 
 server_distribution: jammy
 timezone: "Europe/Paris"

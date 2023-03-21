@@ -34,3 +34,9 @@ tasks:
     dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
     cmds:
       - ansible-playbook k3s/setup.yaml
+
+  k3s:reset:
+    desc: K3s Setup
+    dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
+    cmds:
+      - ansible-playbook k3s/reset.yaml

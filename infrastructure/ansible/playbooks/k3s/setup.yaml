@@ -1,6 +1,7 @@
-- name: Install K3s
+---
+
+- name: K3s Setup
   hosts: nexus
   any_errors_fatal: true
   roles:
-    - os
-    - firewall
+    - k3s

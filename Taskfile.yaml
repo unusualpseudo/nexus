@@ -6,6 +6,7 @@ vars:
 
 env:
   ANSIBLE_CONFIG: "{{.ANSIBLE_DIR}}/ansible.cfg"
+  KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
 
 dotenv: [".envrc"]
 
@@ -14,3 +15,9 @@ includes:
   terraform: ./.taskfiles/TerraformTasks.yaml
   ansible: ./.taskfiles/AnsibleTasks.yaml
   pre-commit: ./.taskfiles/PrecommitTasks.yaml
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task -l

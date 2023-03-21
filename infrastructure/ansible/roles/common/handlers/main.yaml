@@ -4,9 +4,10 @@
     name: sshd
     state: restarted
 
-- name: Reload systemd daemon
-  systemd:
-    daemon_reload: true
+- name: Restart docker
+  service:
+    name: docker
+    state: restarted
 
 - name: Rebuild locales database
   command: "{{ item }}"

@@ -8,3 +8,4 @@ terraform.tfstate*
 
 #  visual studio code
 *.code-workspace
+kubeconfig
