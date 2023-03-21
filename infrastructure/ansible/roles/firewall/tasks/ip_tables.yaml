@@ -69,6 +69,30 @@
     jump: ACCEPT
     protocol: tcp
 
+- name: Firewall rule - allow port 25/SMTP traffic
+  iptables:
+    chain: INPUT
+    destination_port: "25"
+    jump: ACCEPT
+    protocol: tcp
+
+
+- name: Firewall rule - allow port 465/SMTP traffic
+  iptables:
+    chain: INPUT
+    destination_port: "465"
+    jump: ACCEPT
+    protocol: tcp
+
+
+- name: Firewall rule - allow port 993/IMAP traffic
+  iptables:
+    chain: INPUT
+    destination_port: "993"
+    jump: ACCEPT
+    protocol: tcp
+
+
 - name: Firewall rule - drop any traffic without rule
   iptables:
     chain: INPUT
