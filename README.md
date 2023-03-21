@@ -1,5 +1,5 @@
 # nexus
-My home lab
+Single node K3s Cluster
 
 
 ![Broken links checks](https://github.com/unusualpseudo/nexus/actions/workflows/broken-links-check.yaml/badge.svg)
