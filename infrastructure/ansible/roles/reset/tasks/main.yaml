@@ -44,9 +44,6 @@
     - /var/lib/rancher/k3s
     - /var/lib/rancher/
     - /var/lib/cni/
-
-- name: Reload daemon_reload
-  systemd:
-    daemon_reload: yes
-
-- meta: flush_handlers
+    - /usr/local/bin/flux
+    - /usr/local/bin/helm
+    - "/home/{{ ansible_user }}/.kube/"

@@ -58,10 +58,10 @@
     owner: "{{ ansible_user }}"
     mode: "u=rw,g=,o="
 
-- name: Replace https://localhost:6443 by https://master-ip:6443
+- name: Replace https://localhost:6443 by https://node-ip:6443
   command: >-
     k3s kubectl config set-cluster default
-      --server=https://{{ master_ip }}:6443
+      --server=https://{{ node_ip }}:6443
       --kubeconfig ~{{ ansible_user }}/.kube/config
   changed_when: true
 
@@ -79,7 +79,6 @@
     src: ~/.kube/config
     dest: "{{ lookup('env', 'KUBECONFIG')}}"
     flat: true
-
 
 - name: Create kubectl symlink
   file:
@@ -99,7 +98,6 @@
     destination_port: "6443"
     jump: ACCEPT
     protocol: tcp
-
 
 - name: Save current state of the firewall in system file
   community.general.iptables_state:

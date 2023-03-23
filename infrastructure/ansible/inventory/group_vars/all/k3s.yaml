@@ -1,7 +1,8 @@
 ---
 k3s_version: v1.22.3+k3s1
 systemd_dir: /etc/systemd/system
-master_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+node_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+cluster_cidr: "10.42.0.0/16"
 k3s_server_location: /var/lib/rancher/k3s
-extra_server_args: "--no-deploy traefik"
+extra_server_args: "--no-deploy traefik --flannel-backend=none --no-flannel --disable-network-policy --disable=servicelb --disable=metrics-server --cluster-cidr={{cluster_cidr}}"
 extra_agent_args: ""
