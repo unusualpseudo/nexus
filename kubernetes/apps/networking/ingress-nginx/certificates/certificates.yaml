@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nexus-domain-certificate
+  namespace: networking
+spec:
+  secretName: nexus-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: falsebit.io
+  dnsNames:
+    - falsebit.io
+    - "*.falsebit.io"

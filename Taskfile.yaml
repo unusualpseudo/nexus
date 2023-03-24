@@ -3,6 +3,7 @@ version: "3"
 
 vars:
   ANSIBLE_DIR: "{{.ROOT_DIR}}/infrastructure/ansible"
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
 
 env:
   ANSIBLE_CONFIG: "{{.ANSIBLE_DIR}}/ansible.cfg"
@@ -15,7 +16,7 @@ includes:
   terraform: ./.taskfiles/TerraformTasks.yaml
   ansible: ./.taskfiles/AnsibleTasks.yaml
   pre-commit: ./.taskfiles/PrecommitTasks.yaml
-
+  cluster: ./.taskfiles/ClusterTasks.yaml
 tasks:
   default:
     silent: true
