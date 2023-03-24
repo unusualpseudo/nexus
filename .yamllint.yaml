@@ -2,7 +2,7 @@
 ignore: |
   .vscode/
   *.enc.yaml
-  *.sops.yml
+  *.sops.yaml
 extends: default
 rules:
   truthy:
