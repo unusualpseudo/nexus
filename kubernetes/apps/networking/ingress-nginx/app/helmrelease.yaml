@@ -1,0 +1,76 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ingress-nginx
+  namespace: networking
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: ingress-nginx
+      version: 4.5.2
+      sourceRef:
+        kind: HelmRepository
+        name: ingress-nginx
+        namespace: flux-system
+      interval: 30m
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      replicaCount: 1
+      extraEnvs:
+        - name: TZ
+          value: "${TIMEZONE}"
+      ingressClassResource:
+        defaut: true
+      config:
+        client-body-buffer-size: "100M"
+        client-body-timeout: 120
+        client-header-timeout: 120
+        enable-brotli: "true"
+        hsts-max-age: "31449600"
+        keep-alive-requests: 10000
+        keep-alive: 120
+        service:
+          externalTrafficPolicy: Local
+        log-format-escape-json: "true"
+        proxy-body-size: 0
+        proxy-buffer-size: "16k"
+        ssl-protocols: "TLSv1.3 TLSv1.2"
+        extraArgs:
+          default-ssl-certificate: |-
+            networking/nexus-tls
+        resources:
+          requests:
+            cpu: 100m
+            memory: 250Mi
+          limits:
+          memory: 500Mi
+        defaultBackend:
+          enable: true
+          image:
+            repository: ghcr.io/tarampampam/error-pages
+            tag: 2.20.0
+          replicaCount: 1
+          extraEnvs:
+            - name: TEMPLATE_NAME
+              value: shuffle
+            - name: SHOW_DETAILS
+              value: false
+  valuesFrom:
+    - targetPath: controller.config.proxy-real-ip-cidr
+      kind: ConfigMap
+      name: cloudflare-networks
+      valuesKey: cloudflare-networks.txt
