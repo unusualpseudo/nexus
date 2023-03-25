@@ -3,6 +3,8 @@ version: "3"
 
 tasks:
   flux:install:
+    preconditions:
+      - flux check --pre
     desc: Install Flux CRDs
     dir: "{{.KUBERNETES_DIR}}/bootstrap/flux"
     cmds:
@@ -13,6 +15,9 @@ tasks:
     dir: "{{.KUBERNETES_DIR}}"
     preconditions:
       - flux check
+      - sh: test -f {{.SOPS_AGE_KEY_FILE}}
+        msg: |
+          Age key file missing!
     cmds:
       - sops --decrypt ./bootstrap/flux/age-key.sops.yaml | kubectl apply -f -
       - sops --decrypt ./bootstrap/flux/github-deploy-key.sops.yaml | kubectl apply -f -
@@ -24,3 +29,71 @@ tasks:
     dir: "{{.KUBERNETES_DIR}}"
     cmds:
       - kubectl apply --server-side --kustomize ./flux/config
+
+  gr-sync:
+    desc: Sync Flux GitRepositories
+    cmds:
+      - |
+        kubectl get gitrepositories --all-namespaces --no-headers | awk '{print $1, $2}' \
+          | xargs --max-procs=4 -l bash -c \
+            'kubectl -n $0 annotate gitrepository/$1 reconcile.fluxcd.io/requestedAt=$(date +%s) --field-manager=flux-client-side-apply --overwrite'
+  ks-sync:
+    desc: Sync Flux Kustomizations
+    cmds:
+      - |
+        kubectl get kustomization --all-namespaces --no-headers | awk '{print $1, $2}' \
+          | xargs --max-procs=4 -l bash -c \
+            'kubectl -n $0 annotate kustomization/$1 reconcile.fluxcd.io/requestedAt="$(date +%s)" --field-manager=flux-client-side-apply --overwrite'
+  hr-sync:
+    desc: Sync Flux HelmReleases
+    cmds:
+      - |
+        kubectl get helmreleases --all-namespaces --no-headers | awk '{print $1, $2}' \
+          | xargs --max-procs=4 -l bash -c \
+            'kubectl -n $0 annotate helmrelease/$1 reconcile.fluxcd.io/requestedAt="$(date +%s)" --overwrite'
+
+  nodes:
+    desc: List all the nodes in your cluster
+    cmds:
+      - kubectl get nodes {{.CLI_ARGS | default "-o wide"}}
+
+  pods:
+    desc: List all the pods in your cluster
+    cmds:
+      - kubectl get pods {{.CLI_ARGS | default "-A"}}
+
+  services:
+    desc: List all the services in your cluster
+    cmds:
+      - kubectl get services {{.CLI_ARGS | default "-A"}}
+
+  kustomizations:
+    desc: List all the kustomizations in your cluster
+    cmds:
+      - kubectl get kustomizations {{.CLI_ARGS | default "-A"}}
+
+  helmreleases:
+    desc: List all the helmreleases in your cluster
+    cmds:
+      - kubectl get helmreleases {{.CLI_ARGS | default "-A"}}
+
+  helmrepositories:
+    desc: List all the helmrepositories in your cluster
+    cmds:
+      - kubectl get helmrepositories {{.CLI_ARGS | default "-A"}}
+
+  gitrepositories:
+    desc: List all the gitrepositories in your cluster
+    cmds:
+      - kubectl get gitrepositories {{.CLI_ARGS | default "-A"}}
+
+  certificates:
+    desc: List all the certificates in your cluster
+    cmds:
+      - kubectl get certificates {{.CLI_ARGS | default "-A"}}
+      - kubectl get certificaterequests {{.CLI_ARGS | default "-A"}}
+
+  ingresses:
+    desc: List all the ingresses in your cluster
+    cmds:
+      - kubectl get ingress {{.CLI_ARGS | default "-A"}}
