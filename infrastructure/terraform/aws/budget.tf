@@ -13,15 +13,22 @@ resource "aws_budgets_budget" "cost" {
     notification_type          = "ACTUAL"
     subscriber_email_addresses = [data.sops_file.aws_secrets.data["notify_email"]]
   }
+
 }
 
 
-resource "aws_budgets_budget" "s3" {
+resource "aws_budgets_budget" "s3_storage_budget" {
   name         = "s3-budget"
   budget_type  = "USAGE"
   limit_amount = "5"
   limit_unit   = "GB"
   time_unit    = "MONTHLY"
+
+  cost_filter {
+    name   = "UsageTypeGroup"
+    values = ["Amazon S3"]
+  }
+
   notification {
     comparison_operator        = "GREATER_THAN"
     threshold                  = 50
@@ -29,5 +36,4 @@ resource "aws_budgets_budget" "s3" {
     notification_type          = "FORECASTED"
     subscriber_email_addresses = [data.sops_file.aws_secrets.data["notify_email"]]
   }
-
 }
