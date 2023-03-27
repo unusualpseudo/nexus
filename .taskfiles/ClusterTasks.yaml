@@ -44,6 +44,12 @@ tasks:
         kubectl get kustomization --all-namespaces --no-headers | awk '{print $1, $2}' \
           | xargs --max-procs=4 -l bash -c \
             'kubectl -n $0 annotate kustomization/$1 reconcile.fluxcd.io/requestedAt="$(date +%s)" --field-manager=flux-client-side-apply --overwrite'
+  reconcile:
+    desc: Force update Flux to pull in changes from your Git repository
+    cmds:
+      - flux reconcile -n flux-system source git nexus-repository
+      - flux reconcile -n flux-system kustomization cluster
+
   hr-sync:
     desc: Sync Flux HelmReleases
     cmds:
@@ -51,6 +57,12 @@ tasks:
         kubectl get helmreleases --all-namespaces --no-headers | awk '{print $1, $2}' \
           | xargs --max-procs=4 -l bash -c \
             'kubectl -n $0 annotate helmrelease/$1 reconcile.fluxcd.io/requestedAt="$(date +%s)" --overwrite'
+
+  hr-restart:
+    desc: Restart all failed Helm Releases
+    cmds:
+      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -l bash -c 'flux suspend hr $0 -n $1'
+      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -l bash -c 'flux resume hr $0 -n $1'
 
   nodes:
     desc: List all the nodes in your cluster
@@ -97,3 +109,15 @@ tasks:
     desc: List all the ingresses in your cluster
     cmds:
       - kubectl get ingress {{.CLI_ARGS | default "-A"}}
+
+  resources:
+    desc: Gather common resources in your cluster, useful when asking for support
+    cmds:
+      - task: nodes
+      - task: kustomizations
+      - task: helmreleases
+      - task: helmrepositories
+      - task: gitrepositories
+      - task: certificates
+      - task: ingresses
+      - task: pods
