@@ -42,6 +42,8 @@ spec:
         externalTrafficPolicy: Local
       ingressClassResource:
         defaut: true
+      extraArgs:
+        default-ssl-certificate: "networking/${CLOUDFLARE_DOMAIN/./-}-production-tls"
       config:
         client-body-buffer-size: "100M"
         client-body-timeout: 120
@@ -56,9 +58,6 @@ spec:
         ssl-protocols: "TLSv1.3 TLSv1.2"
         use-forwarded-headers: "true"
         forwarded-for-header: "CF-Connecting-IP"
-        extraArgs:
-          default-ssl-certificate: |-
-            networking/nexus-tls
         podAnnotations:
           configmap.reloader.stakter.com/reload: "cloudflare-proxied-networks"
         resources:

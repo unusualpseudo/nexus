@@ -2,14 +2,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: nexus-domain-certificate
+  name: "${CLOUDFLARE_DOMAIN/./-}-production"
   namespace: networking
 spec:
-  secretName: nexus-tls
+  secretName: "${CLOUDFLARE_DOMAIN/./-}-production-tls"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: falsebit.io
+  commonName: ${CLOUDFLARE_DOMAIN}
   dnsNames:
-    - falsebit.io
-    - "*.falsebit.io"
+    - "${CLOUDFLARE_DOMAIN}"
+    - "*.${CLOUDFLARE_DOMAIN}"
