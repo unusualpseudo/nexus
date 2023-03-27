@@ -8,3 +8,4 @@ resources:
   - metallb.yaml
   - metrics-server.yaml
   - stakater.yaml
+  - bjw-s.yaml
