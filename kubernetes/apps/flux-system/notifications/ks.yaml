@@ -1,0 +1,32 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-flux-notifications
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/flux-system/notifications
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: nexus-repository
+  healthChecks:
+    - apiVersion: notification.toolkit.fluxcd.io/v1beta2
+      kind: Alert
+      name: discord-alert
+      namespace: flux-system
+    - apiVersion: notification.toolkit.fluxcd.io/v1beta2
+      kind: Provider
+      name: discord-provider
+      namespace: flux-system
+    - apiVersion: notification.toolkit.fluxcd.io/v1beta2
+      kind: Alert
+      name: github-alert
+      namespace: flux-system
+    - apiVersion: notification.toolkit.fluxcd.io/v1beta2
+      kind: Provider
+      name: github-provider
+      namespace: flux-system
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
