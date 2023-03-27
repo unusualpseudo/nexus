@@ -6,9 +6,9 @@ namespace: networking
 resources:
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: cloudflare-networks
+  - name: cloudflare-proxied-networks
     files:
-      - ./cloudflare-networks.txt
+      - ./cloudflare-proxied-networks.txt
 generatorOptions:
   disableNameSuffixHash: true
 labels:
