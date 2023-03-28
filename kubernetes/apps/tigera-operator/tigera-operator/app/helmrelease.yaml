@@ -1,0 +1,48 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tigera-operator
+  namespace: tigera-operator
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: tigera-operator
+      version: v3.25.0
+      sourceRef:
+        kind: HelmRepository
+        name: calico
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    installation:
+      enabled: true
+      registry: quay.io
+      imagePath: calico
+      calicoNetworks:
+        hostPorts: Disabled
+        ipPools:
+          - blockSize: 26
+            cidr: "10.42.0.0/16"
+            encapsultation: None
+            natOutgoing: Enabled
+            nodeSelector: all()
+        multiInterfaceMode: None
+        nodeAdressAutodetectionV4:
+          cidrs: ["192.168.1.0/24"]
+      nodeMetricsPort: 9091
+      typhaMetricsPort: 9093
