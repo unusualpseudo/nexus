@@ -9,7 +9,7 @@ spec:
     ipPools:
       - blockSize: 26
         cidr: "{{ cluster_cidr }}"
-        encapsulation: VXLANCrossSubnet # or "None"
+        encapsulation: "None"
         natOutgoing: Enabled
         nodeSelector: all()
     nodeAddressAutodetectionV4:

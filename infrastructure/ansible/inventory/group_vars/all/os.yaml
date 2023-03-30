@@ -17,6 +17,8 @@ apt_install_packages:
   - unattended-upgrades
   - unzip
   - sudo
+  - python3-kubernetes
+  - python3-yaml
 
 apt_remove_packages:
   - cloud-init
