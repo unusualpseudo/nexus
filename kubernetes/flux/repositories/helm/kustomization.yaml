@@ -9,3 +9,4 @@ resources:
   - metrics-server.yaml
   - stakater.yaml
   - bjw-s.yaml
+  - calico.yaml
