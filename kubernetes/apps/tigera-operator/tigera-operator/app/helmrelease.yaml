@@ -33,16 +33,16 @@ spec:
       enabled: true
       registry: quay.io
       imagePath: calico
-      calicoNetworks:
+      calicoNetwork:
         hostPorts: Disabled
         ipPools:
           - blockSize: 26
             cidr: "10.42.0.0/16"
-            encapsultation: None
+            encapsulation: None
             natOutgoing: Enabled
             nodeSelector: all()
         multiInterfaceMode: None
-        nodeAdressAutodetectionV4:
+        nodeAddressAutodetectionV4:
           cidrs: ["192.168.1.0/24"]
       nodeMetricsPort: 9091
       typhaMetricsPort: 9093
