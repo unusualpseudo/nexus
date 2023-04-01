@@ -1,0 +1,111 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: hajimari
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: hajimari
+      version: 2.0.2
+      sourceRef:
+        kind: HelmRepository
+        name: hajimari
+        namespace: flux-system
+      interval: 1h
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    env:
+      TZ: "${TIMEZONE}"
+    hajimari:
+      defaultEnable: true
+      namespaceSelector:
+        matchNames:
+          - default
+          - networking
+          - kube-system
+          - debug
+      title: Nexus
+      name: Spike
+      darkTheme: espresso
+      showGreeting: true
+      showAppGroups: true
+      showAppUrls: false
+      showAppInfo: false
+      showAppStatus: true
+      defaultAppIcon: mdi:application
+      showBookmarkGroups: true
+      showGlobalBookmarks: false
+      alwaysTargetBlank: false
+      searchProviders:
+        - name: Google
+          token: g
+          icon: simple-icons:google
+          searchUrl: https://www.google.com/search?q={query}
+          url: https://www.google.com
+        - name: Letterboxd
+          token: i
+          searchUrl: https://letterboxd.com/search/{query}
+          url: https://www.imdb.com
+        - name: Reddit
+          token: r
+          searchUrl: https://www.reddit.com/search?q={query}
+          url: https://www.reddit.com
+        - name: YouTube
+          token: "y"
+          searchUrl: https://www.youtube.com/results?search_query={query}
+          url: https://www.youtube.com
+      globalBookmarks:
+        - group: Mail
+          bookmarks:
+            - name: Gmail
+              url: "https://gmail.com"
+        - group: Dev
+          bookmarks:
+            - name: GitHub
+              url: "https://github.com"
+        - group: Media
+          bookmarks:
+            - name: YouTube
+              url: "https://youtube.com/feed/subscriptions"
+        - group: Tech
+          bookmarks:
+            - name: Hacker News
+              url: "https://hn.algolia.com"
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          hajimari.io/enable: "false"
+          hajimari.io/icon: weather-sunset
+        hosts:
+          - host: &host "apps.${CLOUDFLARE_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "hajimari-settings"
+    presistence:
+      data:
+        enable: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128M
