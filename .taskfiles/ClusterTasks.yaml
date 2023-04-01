@@ -29,14 +29,14 @@ tasks:
     cmds:
       - ansible all --one-line -a 'uptime'
 
-  k3s:setup:
-    desc: K3s Setup
+  install:
+    desc: K3s install
     dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
     cmds:
-      - ansible-playbook k3s/setup.yaml
+      - ansible-playbook k3s/install.yaml
 
-  k3s:reset:
-    desc: K3s Setup
+  nuke:
+    desc: K3s Nuke
     dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
     cmds:
-      - ansible-playbook k3s/reset.yaml
+      - ansible-playbook k3s/nuke.yaml

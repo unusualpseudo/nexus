@@ -1,5 +1,5 @@
 ---
-- name: K3s reset
+- name: K3s Nuke
   hosts: nexus
   any_errors_fatal: true
   pre_tasks:
@@ -7,7 +7,7 @@
       ansible.builtin.pause:
         seconds: 2
   roles:
-    - reset
+    - nuke
   post_tasks:
     - name: Reboot and wait for node to come back up
       reboot:
