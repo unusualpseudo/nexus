@@ -105,7 +105,7 @@ tasks:
       - kubectl get certificates {{.CLI_ARGS | default "-A"}}
       - kubectl get certificaterequests {{.CLI_ARGS | default "-A"}}
 
-  ingresses:
+  ingress:
     desc: List all the ingresses in your cluster
     cmds:
       - kubectl get ingress {{.CLI_ARGS | default "-A"}}
