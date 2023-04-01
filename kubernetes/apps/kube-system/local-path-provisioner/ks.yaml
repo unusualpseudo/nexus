@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/disabled: "true"
 spec:
-  path: ./kubernetes/apps/kube-system/local-apth-provisioner/app
+  path: ./kubernetes/apps/kube-system/local-path-provisioner/app
   prune: true
   interval: 30m
   retryInterval: 1m
