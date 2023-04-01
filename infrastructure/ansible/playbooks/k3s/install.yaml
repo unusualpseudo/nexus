@@ -1,5 +1,5 @@
 ---
-- name: K3s Setup
+- name: K3s Install
   hosts: nexus
   any_errors_fatal: true
   pre_tasks:
