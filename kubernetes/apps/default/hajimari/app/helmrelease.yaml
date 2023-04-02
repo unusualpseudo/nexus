@@ -38,6 +38,7 @@ spec:
           - networking
           - kube-system
           - flux-system
+          - monitoring
           - debug
       title: Nexus
       name: Spike
@@ -90,6 +91,8 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
+        annotations:
+          hajimari.io/enable: "false"
         hosts:
           - host: &host "apps.${CLOUDFLARE_DOMAIN}"
             paths:
