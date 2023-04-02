@@ -11,3 +11,4 @@ resources:
   - bjw-s.yaml
   - calico.yaml
   - hajimari.yaml
+  - weave-gitops.yaml
