@@ -26,13 +26,12 @@ spec:
     adminUser:
       create: true
       username: admin
-      passwordHash: "${WEAVE_GITOPS_ADMIN_PASSWORD}"
+    envVars:
+      - name: WEAVE_GITOPS_FEATURE_TENANCY
+        value: "false"
     ingress:
       enabled: true
       className: nginx
-      annotations:
-        hajimari.io/enable: "true"
-        hajimari.io/icon: sawtooth-wave
       hosts:
         - host: &host "gitops.${CLOUDFLARE_DOMAIN}"
           paths:
@@ -42,9 +41,14 @@ spec:
         - hosts:
             - *host
     networkPolicy:
-      create: false
+      create: true
     metrics:
       enabled: true
     rbac:
       create: true
       impersonationResourceNames: ["admin"]
+  valuesFrom:
+    - kind: Secret
+      name: weave-gitops-secret
+      valuesKey: adminPasswordHash
+      targetPath: adminUser.passwordHash
