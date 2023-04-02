@@ -1,0 +1,29 @@
+---
+- Cloud:
+    - Cloudflare:
+        - icon: cloudflare.png
+          href: https://www.cloudflare.com/
+    - AWS:
+        - icon: aws.png
+          href: https://www.cloudflare.com/
+- Social:
+    - Discord:
+        - href: 'https://discord.com/app'
+          icon: discord.png
+    - Gmail:
+        - href: 'http://gmail.com'
+          icon: gmail.png
+- Media:
+    - YouTube:
+        - href: 'https://youtube.com/feed/subscriptions'
+          icon: youtube-play.png
+    - Spotify:
+        - href: 'http://open.spotify.com'
+          icon: spotify.png
+- Git:
+    - k8s-at-home:
+        - href: 'https://nanne.dev/k8s-at-home-search/'
+          icon: kubernetes-dashboard.png
+    - nexus:
+        - href: 'https://github.com/unusualpseudo/Nexus'
+          icon: github-light.png
