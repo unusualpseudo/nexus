@@ -10,5 +10,5 @@ resources:
   - stakater.yaml
   - bjw-s.yaml
   - calico.yaml
-  - hajimari.yaml
+  - jameswynn.yaml
   - weave-gitops.yaml
