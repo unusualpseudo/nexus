@@ -1,0 +1,6 @@
+---
+- Monitoring:
+    - Uptime-kuma:
+        href: https://status.falsebit.io
+        icon: uptime-kuma.png
+        description: Check cluster health
