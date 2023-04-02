@@ -53,13 +53,12 @@ spec:
         keep-alive-requests: 10000
         keep-alive: 120
         log-format-escape-json: "true"
-        proxy-body-size: 0
-        proxy-send-timeout: 300
-        proxy-read-timeout: 300
         proxy-connect-timeout: 300
-        proxy-buffer-size: "16k"
+        proxy-body-size: "100M"
         ssl-protocols: "TLSv1.3 TLSv1.2"
         use-forwarded-headers: "true"
+        custom-http-errors: |-
+          401,403,404,500,501,502,503
         forwarded-for-header: "CF-Connecting-IP"
         log-format-upstream: >
           {"time": "$time_iso8601", "remote_addr": "$proxy_protocol_addr",

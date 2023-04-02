@@ -3,4 +3,8 @@
     - Uptime-kuma:
         href: https://status.falsebit.io
         icon: uptime-kuma.png
-        description: Check cluster health
+        description: Services health
+    - Weave-gitops:
+        href: https://gitops.falsebit.io
+        icon: mdi-cloudcheck
+        description: Flux health
