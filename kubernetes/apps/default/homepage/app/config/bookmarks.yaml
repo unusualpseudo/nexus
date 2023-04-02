@@ -2,10 +2,10 @@
 - Cloud:
     - Cloudflare:
         - icon: cloudflare.png
-          href: https://www.cloudflare.com/
-    - AWS:
-        - icon: aws.png
-          href: https://www.cloudflare.com/
+          href: 'https://dash.cloudflare.com/'
+    - Cloudflare Zero-Trust:
+        - icon: cloudflare-zero-trust.png
+          href: 'https://one.dash.cloudflare.com'
 - Social:
     - Discord:
         - href: 'https://discord.com/app'
@@ -13,6 +13,9 @@
     - Gmail:
         - href: 'http://gmail.com'
           icon: gmail.png
+    - Reddit:
+        - href: 'https://www.reddit.com/'
+          icon: reddit.png
 - Media:
     - YouTube:
         - href: 'https://youtube.com/feed/subscriptions'
