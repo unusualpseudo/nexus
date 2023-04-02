@@ -55,6 +55,7 @@ spec:
         log-format-escape-json: "true"
         proxy-connect-timeout: 300
         proxy-body-size: "100M"
+        proxy-buffer-size: "16k"
         ssl-protocols: "TLSv1.3 TLSv1.2"
         use-forwarded-headers: "true"
         custom-http-errors: |-
@@ -76,17 +77,18 @@ spec:
             memory: 250Mi
           limits:
           memory: 500Mi
-        defaultBackend:
-          enable: true
-          image:
-            repository: ghcr.io/tarampampam/error-pages
-            tag: 2.20.0
-          replicaCount: 1
-          extraEnvs:
-            - name: TEMPLATE_NAME
-              value: shuffle
-            - name: SHOW_DETAILS
-              value: false
+    defaultBackend:
+      enable: true
+      name: "defaultbackend"
+      image:
+        repository: ghcr.io/tarampampam/error-pages
+        tag: 2.21.0
+      replicaCount: 1
+      extraEnvs:
+        - name: TEMPLATE_NAME
+          value: shuffle
+        - name: SHOW_DETAILS
+          value: false
   valuesFrom:
     - targetPath: controller.config.proxy-real-ip-cidr
       kind: ConfigMap
