@@ -12,3 +12,4 @@ resources:
   - calico.yaml
   - jameswynn.yaml
   - weave-gitops.yaml
+  - portainer.yaml
