@@ -8,3 +8,7 @@
         href: https://gitops.falsebit.io
         icon: mdi-cloudcheck
         description: Flux health
+    - Portainer:
+        href: https://cluster.falsebit.io
+        icon: portainer-v2.png
+        description: Containers health
