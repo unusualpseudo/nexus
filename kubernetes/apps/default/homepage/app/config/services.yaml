@@ -6,7 +6,7 @@
         description: Services health
     - Weave-gitops:
         href: https://gitops.falsebit.io
-        icon: mdi-cloudcheck
+        icon: https://cncf-branding.netlify.app/img/projects/flux/stacked/black/flux-stacked-black.png
         description: Flux health
     - Portainer:
         href: https://cluster.falsebit.io
