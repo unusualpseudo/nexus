@@ -12,3 +12,7 @@
     - Kubernetes Dashboard:
         href: https://kubernetes.falsebit.io
         icon: kubernetes-dashboard.png
+- Observability:
+    - Goldilocks:
+        href: https://goldilocks.falsebit.io
+        icon: uptime-kuma.png
