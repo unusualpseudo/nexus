@@ -25,6 +25,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    enterpriseEdition: # free up to 5 nodes
+      enabled: true
     service:
       type: ClusterIP
       httpPort: 9000

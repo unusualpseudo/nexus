@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: passreset
+spec:
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: portainer-pvc
+  containers:
+    - name: passreset
+      image: portainer/helper-reset-password
+      volumeMounts:
+        - mountPath: "/data"
+          name: data
