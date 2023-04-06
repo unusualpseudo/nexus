@@ -14,3 +14,4 @@ resources:
   - weave-gitops.yaml
   - portainer.yaml
   - kubernetes-dashboard.yaml
+  - fairwinds-charts.yaml

@@ -10,6 +10,10 @@ layout:
     style: row
     columns: 1
     icon: mdi-chart-line
+  Observability:
+    style: row
+    columns: 1
+    icon: mdi-chart-line
   Cloud:
     style: row
     columns: 2
