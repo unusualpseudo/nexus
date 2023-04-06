@@ -3,12 +3,12 @@
     - Uptime-kuma:
         href: https://status.falsebit.io
         icon: uptime-kuma.png
-        description: Services health
     - Weave-gitops:
         href: https://gitops.falsebit.io
         icon: https://cncf-branding.netlify.app/img/projects/flux/stacked/black/flux-stacked-black.png
-        description: Flux health
     - Portainer:
         href: https://cluster.falsebit.io
         icon: portainer-v2.png
-        description: Containers health
+    - Kubernetes Dashboard:
+        href: https://kubernetes.falsebit.io
+        icon: kubernetes-dashboard.png

@@ -13,3 +13,4 @@ resources:
   - jameswynn.yaml
   - weave-gitops.yaml
   - portainer.yaml
+  - kubernetes-dashboard.yaml
