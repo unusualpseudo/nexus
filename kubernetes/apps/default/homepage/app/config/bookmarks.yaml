@@ -7,15 +7,18 @@
         - icon: cloudflare-zero-trust.png
           href: 'https://one.dash.cloudflare.com'
 - Social:
+    - Reddit:
+        - href: 'https://www.reddit.com/'
+          icon: reddit.png
+    - Twitter:
+        - href: 'https://twitter.com/home'
+          icon: twitter.png
     - Discord:
         - href: 'https://discord.com/app'
           icon: discord.png
     - Gmail:
         - href: 'http://gmail.com'
           icon: gmail.png
-    - Reddit:
-        - href: 'https://www.reddit.com/'
-          icon: reddit.png
 - Media:
     - YouTube:
         - href: 'https://youtube.com/feed/subscriptions'

@@ -9,11 +9,12 @@
 - kubernetes:
     cluster:
       cpu: true
-      label: nexus
+      label: default
       memory: true
       show: true
       showLabel: true
     nodes:
+      label: nexus
       cpu: true
       memory: true
       show: false
