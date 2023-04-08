@@ -29,6 +29,12 @@ tasks:
     cmds:
       - ansible all --one-line -a 'uptime'
 
+  prepare:
+    desc: Prepare hosts OS
+    dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
+    cmds:
+      - ansible-playbook cluster/prepare.yaml
+
   install:
     desc: K3s install
     dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"

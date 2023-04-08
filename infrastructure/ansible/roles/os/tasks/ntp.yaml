@@ -1,9 +1,9 @@
 ---
-- name: Set timezone
+- name: NTP | Set timezone
   timezone:
     name: "{{ timezone | default('Europe/Paris') }}"
 
-- name: Copy timesyncd config
+- name: NTP | Copy timesyncd config
   copy:
     mode: 0644
     content: |
@@ -19,5 +19,5 @@
     - ntp_servers.fallback is iterable
     - ntp_servers.fallback | length > 0
 
-- name: Enable ntp
+- name: NTP | Enable ntp
   shell: timedatectl set-ntp true

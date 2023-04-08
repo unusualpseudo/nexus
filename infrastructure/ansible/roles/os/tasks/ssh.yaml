@@ -1,11 +1,22 @@
 ---
-- name: Copy ssh login banner to remote
+- name: SSH | Check if cloud-init SSH configuration exits
+  stat:
+    path: /etc/ssh/sshd_config.d/50-cloud-init.conf
+  register: file_stat
+
+- name: SSH | Delete cloud-init SSH configuration if exits
+  file:
+    path: /etc/ssh/sshd_config.d/50-cloud-init.conf
+    state: absent
+  when: file_stat.stat.exists
+
+- name: SSH | Copy ssh login banner to remote
   copy:
     src: "ssh_banner.txt"
     dest: "/etc/ssh/"
     mode: 0644
 
-- name: Secure ssh configuration
+- name: SSH | Secure SSH configuration
   lineinfile:
     path: /etc/ssh/sshd_config
     state: present
@@ -30,6 +41,8 @@
       line: "UseDNS no"
     - regexp: "^#?AllowAgentForwarding"
       line: "AllowAgentForwarding no"
+    - regexp: "^#?AllowUsers"
+      line: "AllowUsers {{ ansible_user }}"
     - regexp: "^#?Banner"
       line: "Banner /etc/ssh/ssh_banner.txt"
   notify: Restart sshd
