@@ -27,16 +27,16 @@ spec:
   valuesFrom:
     - targetPath: communications.default-group.discord.token
       kind: Secret
-      name: botkube-discord
-      valuesKey: TOKEN
+      name: botkube-discord-secret
+      valuesKey: token
     - targetPath: communications.default-group.discord.botID
       kind: Secret
-      name: botkube-discord
-      valuesKey: BOT_ID
+      name: botkube-discord-secret
+      valuesKey: botId
     - targetPath: communications.default-group.discord.channels.default.id
       kind: Secret
-      name: botkube-discord
-      valuesKey: CHANNEL_ID
+      name: botkube-discord-secret
+      valuesKey: channelId
   values:
     settings:
       clusterName: default

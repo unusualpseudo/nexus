@@ -6,6 +6,6 @@ metadata:
   namespace: flux-system
 spec:
   type: discord
-  channel: cicd
+  channel: "${DISCORD_CHANNEL}"
   secretRef:
-    name: discord-webhook-url
+    name: discord-webhook-secret
