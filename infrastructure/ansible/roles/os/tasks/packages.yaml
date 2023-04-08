@@ -1,5 +1,5 @@
 ---
-- name: Upgrade all system packages
+- name: System Packages | Upgrade all system packages
   apt:
     upgrade: full
     update_cache: true
@@ -10,28 +10,28 @@
   retries: 5
   until: apt_upgrade is success
 
-- name: Install aptitude
+- name: System Packages | Install aptitude
   package:
     name: aptitude
     state: present
     update_cache: true
 
-- name: Install packages list
+- name: System Packages | Install packages list
   package:
     name: "{{ apt_install_packages }}"
     state: latest
     update_cache: true
 
-- name: Remove packages
+- name: System Packages | Remove packages
   block:
-    - name: Remove packages
+    - name: System Packages | Remove packages
       apt:
         name: "{{ apt_remove_packages }}"
         state: absent
         autoremove: true
         autoclean: true
 
-    - name: Clean files
+    - name: System Packages | Clean files
       file:
         state: absent
         path: "{{ item }}"

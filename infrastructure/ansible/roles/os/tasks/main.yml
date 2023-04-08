@@ -1,10 +1,8 @@
 ---
 - import_tasks: kernel.yaml
-- import_tasks: grup.yaml
-- import_tasks: filesystem.yaml
 - import_tasks: network.yaml
-- import_tasks: local.yaml
 - import_tasks: ntp.yaml
 - import_tasks: packages.yaml
 - import_tasks: ssh.yaml
+- import_tasks: user.yaml
 - meta: flush_handlers

@@ -1,5 +1,30 @@
 ---
-- name: "Enable kernel modules runtime"
+- name: System inotify Configuration | Set sysctls
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    sysctl_file: /etc/sysctl.d/99-kubernetes.conf
+    reload: true
+  with_dict: "{{ sysctl_config }}"
+  vars:
+    sysctl_config:
+      fs.inotify.max_user_watches: 524288
+      fs.inotify.max_user_instances: 512
+
+- name: System Configuration | Disable swap at runtime
+  ansible.builtin.command: swapoff -a
+  when: ansible_swaptotal_mb > 0
+
+- name: System Configuration | Disable swap at boot
+  ansible.posix.mount:
+    name: "{{ item }}"
+    fstype: swap
+    state: absent
+  loop:
+    - swap
+    - none
+
+- name: System Configuration | Enable kernel modules runtime
   modprobe:
     name: "{{ item }}"
     state: present
@@ -8,7 +33,7 @@
     - overlay
     - rbd
 
-- name: "Enable kernel modules on boot"
+- name: System Configuration | Enable kernel modules on boot
   copy:
     mode: 0644
     content: "{{ item }}"
@@ -17,3 +42,54 @@
     - br_netfilter
     - overlay
     - rbd
+
+- name: System Configuration | Disable swap at boot
+  ansible.posix.mount:
+    name: "{{ item }}"
+    fstype: swap
+    state: absent
+  loop: ["none", "swap"]
+
+- name: System Configuration | Disable mitigations
+  ansible.builtin.replace:
+    path: /etc/default/grub
+    regexp: '^(GRUB_CMDLINE_LINUX=(?:(?![" ]{{ item.key | regex_escape }}=).)*)(?:[" ]{{ item.key | regex_escape }}=\S+)?(.*")$'
+    replace: '\1 {{ item.key }}={{ item.value }}\2'
+  with_dict: "{{ grub_config }}"
+  vars:
+    grub_config:
+      apparmor: "0"
+      mitigations: "off"
+  register: grub_status
+
+- name: System Configuration | Reconfigure grub and initramfs
+  ansible.builtin.command: update-grub
+  when: grub_status.changed
+
+- name: System Configuration | Select default locale
+  debconf:
+    name: locales
+    question: locales/default_environment_locale
+    value: en_US.UTF-8
+    vtype: select
+
+- name: System Configuration | Check if mitigations is disabled
+  shell: grep "GRUB_CMDLINE_LINUX=" /etc/default/grub | grep -c "mitigations=off"
+  register: mitigations_status
+  ignore_errors: true
+
+- name: System Configuration | Disable mitigations
+  replace:
+    path: "/etc/default/grub"
+    regexp: '^(GRUB_CMDLINE_LINUX=(?:(?![" ]{{ option | regex_escape }}=).)*)(?:[" ]{{ option | regex_escape }}=\S+)?(.*")$'
+    replace: '\1 {{ option }}={{ value }}\2'
+  vars:
+    option: mitigations
+    value: "off"
+  when:
+    - mitigations_status.stdout == "0"
+
+- name: System Configuration | Run grub-mkconfig
+  command: update-grub
+  when:
+    - mitigations_status.stdout == "0"

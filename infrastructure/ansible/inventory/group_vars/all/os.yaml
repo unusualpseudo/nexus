@@ -1,6 +1,8 @@
 ---
+public_ssh_keys:
+  -"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICMXNU/Lt9esC8WL5I0GXwop3mS92S2grZcTxhN8fh1m spike@shiva"
+server_distribution: jammy
 apt_install_packages:
-  - vim
   - curl
   - wget
   - nano
@@ -13,12 +15,14 @@ apt_install_packages:
   - net-tools
   - arptables
   - gdisk
+  - fdisk
   - htop
   - unattended-upgrades
   - unzip
   - sudo
   - python3-kubernetes
   - python3-yaml
+  - smartmontools
 
 apt_remove_packages:
   - cloud-init
@@ -40,7 +44,6 @@ apt_remove_packages:
   - unattended-upgrades
   - apparmor
 
-server_distribution: jammy
 timezone: "Europe/Paris"
 
 # Add cloudflare ntp server
