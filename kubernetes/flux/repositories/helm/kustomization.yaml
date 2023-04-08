@@ -16,3 +16,4 @@ resources:
   - kubernetes-dashboard.yaml
   - fairwinds-charts.yaml
   - botkube.yaml
+  - external-secrets.yaml
