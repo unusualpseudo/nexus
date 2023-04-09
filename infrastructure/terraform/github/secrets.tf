@@ -31,9 +31,9 @@ resource "github_actions_secret" "aws_region" {
   plaintext_value = data.sops_file.github.data["aws_region"]
 }
 
-resource "github_repository_deploy_key" "flux-deploy-key" {
+resource "github_repository_deploy_key" "github-deploy-key" {
   repository = github_repository.repo.name
-  title      = "flux-deploy-key"
-  key        = data.sops_file.github.data["flux_deploy_key"]
+  title      = "github-deploy-key"
+  key        = data.sops_file.github.data["github_deploy_key"]
   read_only  = true
 }
