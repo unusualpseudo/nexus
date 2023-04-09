@@ -18,9 +18,7 @@ terraform {
   }
 }
 
-# Configure Github provider
 provider "github" {
-
   token = data.sops_file.github.data["token"]
-  owner = data.sops_file.github.data["owner"]
+  owner = "unusualpseudo"
 }
