@@ -12,6 +12,9 @@ layout:
   Observability:
     style: row
     icon: mdi-telescope
+  Storage:
+    style: row
+    icon: mdi-nas
   Cloud:
     style: row
     columns: 2
