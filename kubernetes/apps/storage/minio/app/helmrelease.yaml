@@ -94,6 +94,7 @@ spec:
           nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
+            proxy_set_header  Accept-Encoding  "identity";
         hosts:
           - host: &api-host "s3.${CLOUDFLARE_DOMAIN}"
             paths:

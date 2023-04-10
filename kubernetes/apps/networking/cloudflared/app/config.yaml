@@ -1,0 +1,14 @@
+---
+tunnel: ${CLOUDFLARE_TUNNEL_ID}
+credentials-file: /etc/cloudflared/cred.json
+originRequest:
+  connectTimeout: 30s
+warp-routing:
+  enabled: false
+
+ingress:
+  - hostname: "*.${CLOUDFLARE_DOMAIN}"
+    service: https://ingress-nginx-controller.networking
+    originRequest:
+      noTLSVerify: true
+  - service: http_status:404

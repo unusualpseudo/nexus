@@ -1,7 +1,3 @@
-data "http" "ipv4" {
-  url = "https://ipv4.icanhazip.com"
-}
-
 data "sops_file" "cloudflare_secrets" {
   source_file = "cloudflare_secrets.sops.yaml"
   input_type  = "yaml"

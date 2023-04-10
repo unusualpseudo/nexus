@@ -4,13 +4,13 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "4.2.0"
     }
-    http = {
-      source  = "hashicorp/http"
-      version = "3.2.1"
-    }
     sops = {
       source  = "carlpett/sops"
       version = "0.7.2"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.4.3"
     }
   }
   backend "s3" {
