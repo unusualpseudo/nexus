@@ -16,3 +16,10 @@
     - Goldilocks:
         href: https://goldilocks.falsebit.io
         icon: mdi-memory
+- Storage:
+    - Minio-console:
+        href: https://minio.falsebit.io
+        icon: minio.png
+    - S3:
+        href: https://s3.falsebit.io
+        icon: minio.png
