@@ -29,7 +29,7 @@ spec:
       replicas: 1
     image:
       repository: cloudflare/cloudflared
-      tag: 2023.3.1-amd64
+      tag: 2023.4.0
     args:
       - tunnel
       - --config
@@ -37,6 +37,9 @@ spec:
       - --metrics
       - 0.0.0.0:9090
       - run
+    ingress:
+      main:
+        enabled: false
     service:
       main:
         nameOverride: metrics
@@ -46,6 +49,8 @@ spec:
     persistence:
       config:
         enabled: true
+        readOnly: true
+        defaultMode: 0755
         type: custom
         volumeSpec:
           configMap:
@@ -56,6 +61,7 @@ spec:
             readOnly: true
       credentials:
         enabled: true
+        readOnly: true
         type: custom
         volumeSpec:
           secret:
