@@ -43,9 +43,6 @@ resource "cloudflare_access_service_token" "token" {
   account_id           = data.sops_file.cloudflare_secrets.data["cloudflare_account_id"]
   name                 = each.value.subdomain
   min_days_for_renewal = 30
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 resource "cloudflare_access_application" "apps" {
