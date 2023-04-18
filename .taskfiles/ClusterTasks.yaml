@@ -14,20 +14,20 @@ tasks:
       - ansible-galaxy collection install -r requirements.yaml --collections-path ~/.ansible/collections --force
 
   list:
-    desc: List all hosts
+    desc: List kubernetes hosts
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
-      - ansible all --list-hosts
+      - ansible kubernetes --list-hosts
 
   ping:
-    desc: Ping all hosts
+    desc: Ping kubernetes hosts
     cmds:
-      - ansible all -m 'ping'
+      - ansible kubernetes -m 'ping'
 
   uptime:
-    desc: Uptime of all hosts
+    desc: Uptime kubernetes all hosts
     cmds:
-      - ansible all --one-line -a 'uptime'
+      - ansible kubernetes --one-line -a 'uptime'
 
   prepare:
     desc: Prepare hosts OS
@@ -46,3 +46,15 @@ tasks:
     dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
     cmds:
       - ansible-playbook k3s/nuke.yaml
+
+  reboot:
+    desc: Reboot all the k8s nodes
+    dir: "{{.ANSIBLE_DIR}}"
+    cmds:
+      - ansible-playbook {{.ANSIBLE_PLAYBOOK_DIR}}/cluster/reboot-nodes.yaml
+
+  poweroff:
+    desc: Shutdown all the k8s nodes
+    dir: "{{.ANSIBLE_DIR}}"
+    cmds:
+      - ansible kubernetes -a '/usr/bin/systemctl poweroff' --become

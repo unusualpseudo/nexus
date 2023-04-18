@@ -1,5 +1,5 @@
 ---
-- name: Setup Cluster OS
+- name: Reboot all nodes
   hosts:
     - master
     - worker
@@ -10,5 +10,7 @@
     - name: Pausing for 2 seconds...
       ansible.builtin.pause:
         seconds: 2
-  roles:
-    - firewall
+  tasks:
+    - name: Reboot and wait for node to come back up
+      ansible.builtin.reboot:
+        msg: Rebooting nodes

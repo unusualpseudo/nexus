@@ -8,3 +8,7 @@ collections:
     version: 2.4.0
   - name: ansible.posix
     version: 1.5.1
+roles:
+  - name: xanmanning.k3s
+    src: https://github.com/PyratLabs/ansible-role-k3s.git
+    version: v3.3.1

@@ -1,7 +1,11 @@
 ---
-all:
+kubernetes:
   children:
-    k3s:
+    master:
       hosts:
-        nexus:
+        horizon:
+          ansible_host: 192.168.1.39
+    worker:
+      hosts:
+        quasar:
           ansible_host: 192.168.1.100

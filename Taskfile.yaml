@@ -17,6 +17,7 @@ includes:
   flux: ./.taskfiles/FluxTasks.yaml
   pre-commit: ./.taskfiles/PrecommitTasks.yaml
   cluster: ./.taskfiles/ClusterTasks.yaml
+  k8s: ./.taskfiles/Kubernetes.yaml
   secrets: ./.taskfiles/ExternalSecrets.yaml
 tasks:
   default:

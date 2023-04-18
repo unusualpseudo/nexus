@@ -4,12 +4,14 @@ kind: Installation
 metadata:
   name: default
 spec:
+  registry: quay.io
+  imagePath: calico
   calicoNetwork:
     bgp: Disabled
     # Note: The ipPools section cannot be modified post-install.
     ipPools:
       - blockSize: 26
-        cidr: "{{ cluster_cidr }}"
+        cidr: "{{ k3s_server['cluster-cidr'] }}"
         encapsulation: VXLANCrossSubnet
         natOutgoing: Enabled
         nodeSelector: all()
