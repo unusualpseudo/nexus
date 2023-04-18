@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
 # Docs: https://www.kubecost.com/kubernetes-autoscaling/kubernetes-vpa/
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease

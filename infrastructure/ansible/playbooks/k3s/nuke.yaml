@@ -1,6 +1,8 @@
 ---
-- name: K3s Nuke
-  hosts: nexus
+- name: K3s Cluster Nuke
+  hosts:
+    - master
+    - worker
   any_errors_fatal: true
   become: true
   gather_facts: true
@@ -8,9 +10,21 @@
     - name: Pausing for 2 seconds...
       ansible.builtin.pause:
         seconds: 2
-  roles:
-    - nuke
-  post_tasks:
-    - name: Reboot and wait for node to come back up
-      reboot:
-        reboot_timeout: 3600
+  tasks:
+    - name: Uninstall k3s
+      ansible.builtin.include_role:
+        name: xanmanning.k3s
+        public: true
+      vars:
+        k3s_state: uninstalled
+    - name: Gather list of CNI files
+      ansible.builtin.find:
+        paths: /etc/cni/net.d
+        patterns: "*"
+        hidden: true
+      register: directory_contents
+    - name: Delete CNI files
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ directory_contents.files }}"

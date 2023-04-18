@@ -22,6 +22,14 @@
   iptables:
     flush: true
 
+- name: Remove any obsolete scripts used by an old version of the role
+  file: path={{ item }} state=absent
+  with_items:
+    - /etc/network/if-post-down.d/iptables-v4
+    - /etc/network/if-pre-up.d/iptables-v4
+    - /etc/iptables.v4.saved
+
+
 - name: Firewall rule - allow all loopback traffic
   iptables:
     action: append
@@ -41,73 +49,11 @@
     jump: ACCEPT
     protocol: icmp
 
-- name: Firewall rule - allow SSH traffic
-  iptables:
-    chain: INPUT
-    destination_port: "22"
-    jump: ACCEPT
-    protocol: tcp
+- name: Save rules (netfilter-persistent)
+  command: netfilter-persistent save
 
-- name: Firewall rule - allow port 80/HTTP traffic
-  iptables:
-    chain: INPUT
-    destination_port: "80"
-    jump: ACCEPT
-    protocol: tcp
-
-- name: Firewall rule - allow port 443/HTTPS traffic
-  iptables:
-    chain: INPUT
-    destination_port: "443"
-    jump: ACCEPT
-    protocol: tcp
-
-- name: Firewall rule - allow port 123/NTP traffic
-  iptables:
-    chain: INPUT
-    destination_port: "123"
-    jump: ACCEPT
-    protocol: tcp
-
-- name: Firewall rule - allow port 25/SMTP traffic
-  iptables:
-    chain: INPUT
-    destination_port: "25"
-    jump: ACCEPT
-    protocol: tcp
-
-
-- name: Firewall rule - allow port 465/SMTP traffic
-  iptables:
-    chain: INPUT
-    destination_port: "465"
-    jump: ACCEPT
-    protocol: tcp
-
-
-- name: Firewall rule - allow port 993/IMAP traffic
-  iptables:
-    chain: INPUT
-    destination_port: "993"
-    jump: ACCEPT
-    protocol: tcp
-
-
-- name: Firewall rule - drop any traffic without rule
-  iptables:
-    chain: INPUT
-    jump: DROP
-
-# This will apply to all loaded/active IPv4 tables.
-- name: Save current state of the firewall in system file
-  community.general.iptables_state:
-    state: saved
-    path: /etc/sysconfig/iptables
-
-# This will apply only to IPv6 filter table.
-- name: Save current state of the firewall in system file
-  community.general.iptables_state:
-    ip_version: ipv6
-    table: filter
-    state: saved
-    path: /etc/iptables/rules.v6
+- name: Restart iptables
+  service:
+    name: iptables
+    enabled: true
+    state: restarted
