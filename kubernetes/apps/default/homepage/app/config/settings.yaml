@@ -1,7 +1,6 @@
 ---
 title: Nexus
 theme: dark
-background: https://unsplash.com/photos/YiXsjwJKXmo
 color: slate
 headerStyle: clean
 hideVersion: true
@@ -12,21 +11,3 @@ layout:
   Observability:
     style: row
     icon: mdi-telescope
-  Storage:
-    style: row
-    icon: mdi-nas
-  Cloud:
-    style: row
-    columns: 2
-    icon: mdi-cloud
-  Git:
-    style: row
-    columns: 2
-  Media:
-    style: row
-    columns: 2
-    icon: mdi-play-circle
-  Social:
-    style: row
-    columns: 2
-    icon: mdi-play-circle
