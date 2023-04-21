@@ -23,7 +23,7 @@ resource "cloudflare_zone_settings_override" "cloudflare_settings" {
     rocket_loader = "on"
     # /caching/configuration
     always_online    = "off"
-    development_mode = "on"
+    development_mode = "off"
     # /network
     http3               = "on"
     zero_rtt            = "on"
