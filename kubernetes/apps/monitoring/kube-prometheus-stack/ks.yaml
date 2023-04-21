@@ -2,10 +2,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-botkube
+  name: cluster-apps-kube-prometheus-stack
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/botkube/app
+  path: ./kubernetes/apps/monitoring/kube-prometheus-stack/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -13,8 +13,8 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: botkube
+      name: kube-prometheus-stack
       namespace: monitoring
-  interval: 30m
-  retryInterval: 2m
-  timeout: 2m
+  interval: 15m
+  retryInterval: 1m
+  timeout: 5m

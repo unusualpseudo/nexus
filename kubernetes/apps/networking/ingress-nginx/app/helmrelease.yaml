@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -76,11 +75,16 @@ spec:
             memory: 250Mi
           limits:
           memory: 500Mi
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+          namespace: networking
     defaultBackend:
       enable: true
       image:
         repository: ghcr.io/tarampampam/error-pages
-        tag: 2.21.0
+        tag: 2.24.0
       replicaCount: 1
       extraEnvs:
         - name: TEMPLATE_NAME

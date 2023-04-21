@@ -1,13 +1,15 @@
 ---
 title: Nexus
 theme: dark
-color: slate
+color: neutral
 headerStyle: clean
 hideVersion: true
 layout:
   Monitoring:
     style: row
     icon: mdi-chart-line
-  Observability:
+    columns: 3
+  Networking:
     style: row
-    icon: mdi-telescope
+    icon: mdi-wan
+    columns: 1

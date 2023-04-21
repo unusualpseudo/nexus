@@ -18,3 +18,7 @@ resources:
   - botkube.yaml
   - external-secrets.yaml
   - external-dns.yaml
+  - pihole.yaml
+  - prometheus-community.yaml
+  - grafana.yaml
+  - cloudnative-pg.yaml

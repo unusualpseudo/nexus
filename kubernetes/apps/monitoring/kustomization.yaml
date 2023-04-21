@@ -7,3 +7,5 @@ resources:
   - ./portainer/ks.yaml
   - ./kubernetes-dashboard/ks.yaml
   - ./botkube/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
+  - ./grafana/ks.yaml
