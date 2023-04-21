@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: cert-manager
 resources:
   - ./helmrelease.yaml
+  - ./prometheusrule.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: cert-manager

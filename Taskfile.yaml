@@ -13,7 +13,7 @@ dotenv: [".envrc"]
 
 includes:
   sops: ./.taskfiles/SopsTasks.yaml
-  terraform: ./.taskfiles/TerraformTasks.yaml
+  tf: ./.taskfiles/TerraformTasks.yaml
   flux: ./.taskfiles/FluxTasks.yaml
   pre-commit: ./.taskfiles/PrecommitTasks.yaml
   cluster: ./.taskfiles/ClusterTasks.yaml

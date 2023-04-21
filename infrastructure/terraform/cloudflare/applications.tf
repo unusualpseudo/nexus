@@ -19,6 +19,11 @@ locals {
       domain    = data.sops_file.cloudflare_secrets.data["cloudflare_domain"]
       subdomain = "gitops"
       type      = "self_hosted"
+    },
+    {
+      domain    = data.sops_file.cloudflare_secrets.data["cloudflare_domain"]
+      subdomain = "pihole"
+      type      = "self_hosted"
     }
   ]
 }
