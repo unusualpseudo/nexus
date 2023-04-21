@@ -3,9 +3,6 @@
     - Weave-gitops:
         href: https://gitops.falsebit.io
         icon: https://cncf-branding.netlify.app/img/projects/flux/stacked/black/flux-stacked-black.png
-    - Portainer:
-        href: https://cluster.falsebit.io
-        icon: portainer-v2.png
     - Kubernetes Dashboard:
         href: https://kubernetes.falsebit.io
         icon: kubernetes-dashboard.png

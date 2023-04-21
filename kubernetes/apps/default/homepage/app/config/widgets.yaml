@@ -14,10 +14,9 @@
       show: true
       showLabel: true
     nodes:
-      label: nexus
+      show: true
       cpu: true
       memory: true
-      show: false
       showLabel: true
 - openmeteo:
     label: Home
