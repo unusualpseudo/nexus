@@ -9,7 +9,7 @@
 - kubernetes:
     cluster:
       cpu: true
-      label: default
+      label: cluster
       memory: true
       show: true
       showLabel: true
