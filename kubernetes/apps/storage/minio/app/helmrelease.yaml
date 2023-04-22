@@ -35,8 +35,11 @@ spec:
     env:
       TZ: "${TIMEZONE}"
       MINIO_UPDATE: "off"
-      MINIO_BROWSER_REDIRECT_URL: https://minio.${CLOUDFLARE_DOMAIN}
-      MINIO_SERVER_URL: https://minio.${CLOUDFLARE_DOMAIN}
+      MINIO_BROWSER_REDIRECT_URL: "https://minio.${CLOUDFLARE_DOMAIN}"
+      MINIO_SERVER_URL: "https://s3.${CLOUDFLARE_DOMAIN}"
+      CONSOLE_MINIO_SERVER: "https://minio.${CLOUDFLARE_DOMAIN}"
+      MINIO_DOMAIN: "https://s3.${CLOUDFLARE_DOMAIN}"
+      MINIO_API_CORS_ALLOW_ORIGIN: "https://minio.${CLOUDFLARE_DOMAIN},https://s3.${CLOUDFLARE_DOMAIN}"
     envFrom:
       - secretRef:
           name: minio-secret
@@ -74,6 +77,10 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
+        nginx.ingress.kubernetes.io/configuration-snippet: |
+            more_set_headers "Access-Control-Allow-Origin: $http_origin";
+        nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+        nginx.ingress.kubernetes.io/enable-cors: "true"
         hosts:
           - host: &console-host "{{ .Release.Name }}.${CLOUDFLARE_DOMAIN}"
             paths:
