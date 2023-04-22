@@ -72,6 +72,11 @@ spec:
       TZ: "${TIMEZONE}"
     DNS1: "1.1.1.1"
     DNS2: "8.8.8.8"
+    dnsmasq:
+      customDnsEntries:
+        - address=/s3.${CLOUDFLARE_DOMAIN}/${METALLB_INGRESS_ADDR}
+        - address=/minio.${CLOUDFLARE_DOMAIN}/${METALLB_INGRESS_ADDR}
+        - address=/portainer.${CLOUDFLARE_DOMAIN}/${METALLB_INGRESS_ADDR}
     adlists:
       # DEFAULT LISTS
       - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts

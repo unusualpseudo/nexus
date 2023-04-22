@@ -11,11 +11,12 @@ k3s_server:
     - metrics-server
     - servicelb
     - traefik
+    - coredns
   disable-network-policy: true
   disable-cloud-controller: true
+  write-kubeconfig-mode: "644"
   cluster-cidr: "10.42.0.0/16"
   service-cidr: "10.43.0.0/16"
-  write-kubeconfig-mode: "0644"
   kube-controller-manager-arg:
     - "bind-address=0.0.0.0"
   kube-proxy-arg:
