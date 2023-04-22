@@ -45,14 +45,15 @@ spec:
     replicaCount: 1
     serviceAccount:
       create: true
-    serviceType: ClusterIP
     service:
       name: kube-dns
+      clusterIP: 10.43.0.10
     prometheus:
       service:
         enabled: true
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: "coredns"
+    deployment:
+      annotations:
+        reloader.stakater.com/auto: "true"
     # https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#coredns-configmap-options
     servers:
       - zones:
@@ -76,9 +77,26 @@ spec:
           - name: prometheus
             parameters: 0.0.0.0:9153
           - name: forward
-            parameters: . ${SVC_PIHOLE_ADDR}
+            parameters: . /etc/resolv.conf 192.168.1.205
           - name: cache
             parameters: 30
           - name: loop
           - name: reload
           - name: loadbalance
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/control-plane
+                  operator: Exists
+    tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/instance: coredns
