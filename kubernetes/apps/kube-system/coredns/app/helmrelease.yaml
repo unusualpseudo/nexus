@@ -59,7 +59,8 @@ spec:
       - zones:
           - zone: .
             scheme: dns://
-            use_tcp: true
+          - zone: falsebit.io
+            scheme: dns://
         port: 53
         plugins:
           - name: log
@@ -77,12 +78,23 @@ spec:
           - name: prometheus
             parameters: 0.0.0.0:9153
           - name: forward
-            parameters: . /etc/resolv.conf 192.168.1.205
+            parameters: . /etc/resolv.conf
+            configBlock: |-
+              except falsebit.io *.falsebit.io
+          - name: file
+            parameters: /etc/coredns/falsebit.io falsebit.io
           - name: cache
             parameters: 30
           - name: loop
           - name: reload
           - name: loadbalance
+    zoneFiles:
+      - filename: falsebit.db
+        domain: falsebit.io
+        contents: |
+          falsebit.io.    IN SOA etta.ns.cloudflare.com. dns.cloudflare.com. 2020100600 10000 2400 604800 3600
+          minio.falsebit.io. IN A      ${METALLB_INGRESS_ADDR}
+          s3.falsebit.io. IN A      ${METALLB_INGRESS_ADDR}
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
