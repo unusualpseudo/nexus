@@ -6,6 +6,8 @@ metadata:
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/monitoring/grafana/app
+  dependsOn:
+    - name: cluster-apps-external-secrets-stores
   prune: true
   sourceRef:
     kind: GitRepository

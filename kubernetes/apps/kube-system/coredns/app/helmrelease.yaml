@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: coredns
+  name: &app coredns
   namespace: kube-system
 spec:
   interval: 15m
@@ -59,8 +59,7 @@ spec:
       - zones:
           - zone: .
             scheme: dns://
-          - zone: falsebit.io
-            scheme: dns://
+            use_tcp: true
         port: 53
         plugins:
           - name: log
@@ -79,22 +78,11 @@ spec:
             parameters: 0.0.0.0:9153
           - name: forward
             parameters: . /etc/resolv.conf
-            configBlock: |-
-              except falsebit.io *.falsebit.io
-          - name: file
-            parameters: /etc/coredns/falsebit.io falsebit.io
           - name: cache
             parameters: 30
           - name: loop
           - name: reload
           - name: loadbalance
-    zoneFiles:
-      - filename: falsebit.db
-        domain: falsebit.io
-        contents: |
-          falsebit.io.    IN SOA etta.ns.cloudflare.com. dns.cloudflare.com. 2020100600 10000 2400 604800 3600
-          minio.falsebit.io. IN A      ${METALLB_INGRESS_ADDR}
-          s3.falsebit.io. IN A      ${METALLB_INGRESS_ADDR}
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -112,3 +100,5 @@ spec:
         labelSelector:
           matchLabels:
             app.kubernetes.io/instance: coredns
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: coredns
