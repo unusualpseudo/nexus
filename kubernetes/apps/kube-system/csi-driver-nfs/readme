@@ -14,6 +14,10 @@ zfs set sharenfs="no_subtree_check,all_squash,anonuid=120,anongid=120,rw=@192.16
 nfs-pool/Apps/MinioIO
 zfs set sharenfs="no_subtree_check,all_squash,anonuid=120,anongid=120,rw=@192.168.1.0/24" \
 nfs-pool/Apps/PVs
+chown 120:120 -R /nfs-pool/Apps/PVs
+chmod 777 -R /nfs-pool/Apps/PVs
+chown 120:120 -R /nfs-pool/Apps/MinioIO
+chmod 777 -R /nfs-pool/Apps/MinioIO
 ```
 
 [Reference](https://github.com/onedr0p/home-ops/blob/main/docs/src/notes/nas.md)
