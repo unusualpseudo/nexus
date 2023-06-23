@@ -30,10 +30,3 @@ resource "github_actions_secret" "aws_region" {
   secret_name     = "AWS_REGION"
   plaintext_value = data.sops_file.github.data["aws_region"]
 }
-
-resource "github_repository_deploy_key" "github-deploy-key" {
-  repository = github_repository.repo.name
-  title      = "github-deploy-key"
-  key        = data.sops_file.github.data["github_deploy_key"]
-  read_only  = true
-}
