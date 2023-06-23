@@ -2,33 +2,26 @@
 version: "3"
 
 tasks:
-  install:
-    preconditions:
-      - flux check --pre
-    desc: Install Flux CRDs
+  verify:
+    desc: Verifiy Flux prerequisites
     dir: "{{.KUBERNETES_DIR}}/bootstrap/flux"
     cmds:
-      - kubectl apply --server-side --kustomize .
+      - flux check --pre
 
-  bootstrap:
-    desc: Apply cluster configuration
+  install:
+    desc: Install flux into the the cluster
     dir: "{{.KUBERNETES_DIR}}"
     preconditions:
-      - flux check
       - sh: test -f {{.SOPS_AGE_KEY_FILE}}
         msg: |
           Age key file missing!
     cmds:
+      - kubectl apply --kustomize {{.KUBERNETES_DIR}}/bootstrap/flux
       - sops --decrypt ./bootstrap/flux/age-key.sops.yaml | kubectl apply -f -
       - sops --decrypt ./bootstrap/flux/github-deploy-key.sops.yaml | kubectl apply -f -
       - sops --decrypt ./flux/vars/cluster-secrets.sops.yaml | kubectl apply -f -
       - kubectl apply -f flux/vars/cluster-settings.yaml
-
-  apply:
-    desc: Kick off Flux
-    dir: "{{.KUBERNETES_DIR}}"
-    cmds:
-      - kubectl apply --server-side --kustomize ./flux/config
+      - kubectl apply --kustomize ./flux/config
 
   gr-sync:
     desc: Sync Flux GitRepositories
