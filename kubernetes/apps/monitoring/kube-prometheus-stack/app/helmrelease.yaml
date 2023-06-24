@@ -27,8 +27,50 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: local-path-provisioner
+      namespace: kube-system
   values:
     cleanPrometheusOperatorObjectNames: true
+    alertmanager:
+      config:
+        global:
+          resolve_timeout: 5m
+        receivers:
+          - name: "null" # quote
+        route:
+          group_by: ["alertname", "job"]
+          group_wait: 1m
+          group_interval: 10m
+          repeat_interval: 12h
+          routes:
+            - receiver: "null" # quote
+              matchers:
+                - alertname =~ "InfoInhibitor"
+        inhibit_rules:
+          - source_matchers:
+              - severity = "critical"
+            target_matchers:
+              - severity = "warning"
+            equal: ["alertname", "namespace"]
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: nginx
+        hosts:
+          - &host "alertmanager.${CLOUDFLARE_DOMAIN}"
+        tls:
+          - hosts:
+              - *host
+      alertmanagerSpec:
+        replicas: 1
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: local-path
+              resources:
+                requests:
+                  storage: 1Gi
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -40,8 +82,6 @@ spec:
       prometheus:
         monitor:
           enabled: true
-    alertmanager:
-      enabled: false
     kubelet:
       enabled: true
     kubeApiServer:
