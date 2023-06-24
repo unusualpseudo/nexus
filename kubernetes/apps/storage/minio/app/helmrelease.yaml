@@ -60,6 +60,18 @@ spec:
           api:
             enalbed: true
             port: &api-port 9000
+    serviceMonitor:
+      main:
+        enabled: true
+        endpoints:
+          - port: api
+            scheme: http
+            path: /minio/v2/metrics/cluster
+            interval: 1m
+            scrapeTimeout: 10s
+            bearerTokenSecret:
+              name: minio-secret
+              key: MINIO_PROMETHEUS_TOKEN
     probes:
       liveness: &probes
         enabled: true
@@ -79,10 +91,6 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
-        nginx.ingress.kubernetes.io/configuration-snippet: |
-          more_set_headers "Access-Control-Allow-Origin: $http_origin";
-        nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
-        nginx.ingress.kubernetes.io/enable-cors: "true"
         hosts:
           - host: &console-host "{{ .Release.Name }}.${CLOUDFLARE_DOMAIN}"
             paths:
@@ -127,6 +135,6 @@ spec:
     resources:
       requests:
         memory: 100Mi
-        cpu: 70m
+        cpu: 100m
       limits:
-        memory: 150Mi
+        memory: 750Mi

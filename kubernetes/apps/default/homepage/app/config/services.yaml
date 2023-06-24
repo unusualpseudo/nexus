@@ -3,9 +3,15 @@
     - Grafana:
         href: https://grafana.falsebit.io
         icon: grafana.png
+    - Prometheus:
+        href: https://prometheus.falsebit.io
+        icon: prometheus.png
     - Kubernetes Dashboard:
         href: https://kubernetes.falsebit.io
         icon: kubernetes-dashboard.png
+    - Portainer:
+        href: https://portainer.falsebit.io
+        icon: portainer.png
 - Networking:
     - Pi-Hole:
         href: https://pihole.falsebit.io/admin
