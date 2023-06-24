@@ -40,7 +40,7 @@ spec:
       CONSOLE_MINIO_SERVER: "https://minio.${CLOUDFLARE_DOMAIN}"
       MINIO_DOMAIN: "https://s3.${CLOUDFLARE_DOMAIN}"
       MINIO_API_CORS_ALLOW_ORIGIN: "https://minio.${CLOUDFLARE_DOMAIN},https://s3.${CLOUDFLARE_DOMAIN}"
-      MINIO_PROMETHEUS_URL: http://kube-prometheus-stacks-prometheus.monitoring:9090
+      MINIO_PROMETHEUS_URL: http://kube-prometheus-stack-prometheus.monitoring:9090
       MINIO_PROMETHEUS_JOB_ID: minio
     envFrom:
       - secretRef:

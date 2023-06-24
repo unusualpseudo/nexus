@@ -8,9 +8,8 @@ spec:
   interval: 10m
   chart:
     spec:
-      # renovate: registryUrl=https://grafana.github.io/helm-charts
       chart: grafana
-      version: 6.50.7
+      version: 6.57.3
       sourceRef:
         kind: HelmRepository
         name: grafana
@@ -18,9 +17,17 @@ spec:
   values:
     replicas: 1
     env:
+      GF_DEFAULT_TIMEZONE: browser
       GF_EXPLORE_ENABLED: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
       GF_LOG_FILTERS: rendering:debug
+      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
+      GF_FEATURE_TOGGLES_ENABLE: publicDashboards
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
+      GF_SECURITY_COOKIE_SAMESITE: grafana
+      GF_SECURITY_ALLOW_EMBEDDING: true
+      GF_LOG_MODE: console
+      GF_SERVER_ROOT_URL: "https://grafana.${CLOUDFLARE_DOMAIN}"
     admin:
       existingSecret: &secret grafana-secret
     grafana.ini:
@@ -44,7 +51,7 @@ spec:
         datasources:
           - name: Prometheus
             type: prometheus
-            url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+            url: http://kube-prometheus-stack-prometheus.monitoring:9090
             access: proxy
             isDefault: true
     dashboardProviders:
@@ -69,7 +76,7 @@ spec:
         # Ref: https://grafana.com/grafana/dashboards/13502-minio-dashboard/
         minio:
           gnetId: 13502
-          revision: 21
+          revision: 22
           datasource: Prometheus
         node-exporter-full:
           gnetId: 1860
@@ -80,9 +87,6 @@ spec:
           datasource: Prometheus
         nginx-request-handling-performance-dashboard:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
-          datasource: Prometheus
-        nginx-ingress-controller:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
           datasource: Prometheus
         cert-manager:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
