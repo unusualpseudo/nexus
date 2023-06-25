@@ -92,7 +92,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         hosts:
-          - host: &console-host "{{ .Release.Name }}.${CLOUDFLARE_DOMAIN}"
+          - host: &console-host "minio.${CLOUDFLARE_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
