@@ -5,6 +5,8 @@ metadata:
   name: cluster-apps-cert-manager
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/cert-manager/cert-manager/app
   prune: true
   interval: 30m
