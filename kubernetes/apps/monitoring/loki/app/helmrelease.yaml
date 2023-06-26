@@ -80,7 +80,17 @@ spec:
               store: memberlist
 
         ruler:
-          enable_api: false
+          enable_api: true
+          enable_alertmanager_v2: true
+          alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
+          storage:
+            type: local
+            local:
+              directory: /rules
+          rule_path: /rules
+          ring:
+            kvstore:
+              store: memberlist
 
         distributor:
           ring:
@@ -122,19 +132,36 @@ spec:
       persistence:
         size: 10Gi
         storageClass: local-path
+      extraVolumeMounts:
+        - name: rules
+          mountPath: /rules
+      extraVolumes:
+        - name: rules
+          emptyDir: {}
 
     write:
       replicas: 1
       persistence:
         size: 10Gi
         storageClass: local-path
+      extraVolumeMounts:
+        - name: rules
+          mountPath: /rules
+      extraVolumes:
+        - name: rules
+          emptyDir: {}
 
     backend:
       replicas: 1
       persistence:
         size: 10Gi
         storageClass: local-path
-
+      extraVolumeMounts:
+        - name: rules
+          mountPath: /rules
+      extraVolumes:
+        - name: rules
+          emptyDir: {}
 
     monitoring:
       dashboards:
@@ -154,7 +181,8 @@ spec:
         enabled: false
     test:
       enabled: false
-
+    podAnnotations:
+      secret.reloader.stakater.com/reload: loki-secret
   valuesFrom:
     - targetPath: loki.structuredConfig.common.storage.s3.access_key_id
       kind: Secret

@@ -5,6 +5,7 @@ namespace: monitoring
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./prometheus-rule.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: loki
