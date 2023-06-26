@@ -36,6 +36,10 @@ spec:
       repository: timberio/vector
       tag: 0.30.0-debian
     args: ["--config", "/etc/vector/vector.yaml"]
+    podMonitor:
+      enabled: true
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: vector-agent
     service:
       main:
         type: LoadBalancer

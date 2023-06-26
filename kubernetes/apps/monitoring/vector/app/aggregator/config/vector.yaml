@@ -1,5 +1,6 @@
 ---
 data_dir: /vector-data-dir
+
 api:
   enabled: true
   address: 0.0.0.0:8686
@@ -8,12 +9,12 @@ api:
 # Sources
 #
 sources:
-  journald_source:
+  journal_logs:
     type: vector
     version: "2"
     address: 0.0.0.0:6000
 
-  kubernetes_source:
+  kubernetes_logs:
     type: vector
     version: "2"
     address: 0.0.0.0:6010
@@ -22,9 +23,10 @@ sources:
 # Transforms
 #
 transforms:
-  kubernetes_remap:
+  kubernetes_logs_remap:
     type: remap
-    inputs: ["kubernetes_source"]
+    inputs:
+      - kubernetes_logs
     source: |
       # Standardize 'app' index
       .custom_app_name = .pod_labels."app.kubernetes.io/name" || .pod_labels.app || .pod_labels."k8s-app" || "unknown"
@@ -32,9 +34,9 @@ transforms:
 # Sinks
 #
 sinks:
-  loki_journald:
+  loki_journal:
     inputs:
-      - journald_source
+      - journal_logs
     type: loki
     endpoint: http://loki-gateway.monitoring.svc.cluster.local
     encoding:
@@ -47,7 +49,7 @@ sinks:
 
   loki_kubernetes:
     inputs:
-      - kubernetes_remap
+      - kubernetes_logs_remap
     type: loki
     endpoint: http://loki-gateway.monitoring.svc.cluster.local
     encoding:
@@ -55,8 +57,10 @@ sinks:
     out_of_order_action: accept
     remove_label_fields: true
     remove_timestamp: true
+    batch:
+      max_bytes: 2049000
     labels:
       app: '{{ custom_app_name }}'
-      container_name: '{{ kubernetes.container_name }}'
+      container_name: '{{ container_name }}'
       namespace: '{{ kubernetes.pod_namespace }}'
       node: '{{ kubernetes.pod_node_name }}'
