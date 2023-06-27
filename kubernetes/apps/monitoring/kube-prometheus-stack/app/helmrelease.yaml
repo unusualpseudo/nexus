@@ -27,9 +27,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: local-path-provisioner
-      namespace: kube-system
   values:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
@@ -67,7 +64,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-path
+              storageClassName: longhorn
               resources:
                 requests:
                   storage: 1Gi

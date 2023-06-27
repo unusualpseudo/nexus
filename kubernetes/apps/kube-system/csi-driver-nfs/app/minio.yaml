@@ -8,7 +8,7 @@ metadata:
     disk.home.arpa/type: hdd
 provisioner: nfs.csi.k8s.io
 parameters:
-  server: ${NAS_ADRESS}
+  server: ${NFS_SERVER_ADDR}
   share: /nfs-pool/Apps/MinioIO
 reclaimPolicy: Delete
 volumeBindingMode: Immediate

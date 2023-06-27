@@ -25,7 +25,7 @@ spec:
       storageOverProvisioningPercentage: 100
       storageMinimalAvailablePercentage: 10
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
-      backupTarget: "nfs://${NAS_ADRESS}:/nfs-pool/Apps/Longhorn"
+      backupTarget: "nfs://${NFS_SERVER_ADDR}:/nfs-pool/Apps/Longhorn"
       defaultDataLocality: best-effort
       restoreVolumeRecurringJobs: true
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
@@ -35,3 +35,8 @@ spec:
       ingressClassName: nginx
       host: "longhorn.${CLOUDFLARE_DOMAIN}"
       tls: true
+    podSecurityContext:
+      runAsUser: 120
+      runAsGroup: 120
+      fsGroup: 120
+      fsGroupChangePolicy: "OnRootMismatch"

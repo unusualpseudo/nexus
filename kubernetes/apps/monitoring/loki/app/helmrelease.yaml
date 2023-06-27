@@ -26,9 +26,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: local-path-provisioner
-      namespace: kube-system
   values:
     loki:
       structuredConfig:
@@ -131,7 +128,7 @@ spec:
       replicas: 1
       persistence:
         size: 10Gi
-        storageClass: local-path
+        storageClass: longhorn
       extraVolumeMounts:
         - name: rules
           mountPath: /rules
@@ -143,7 +140,7 @@ spec:
       replicas: 1
       persistence:
         size: 10Gi
-        storageClass: local-path
+        storageClass: longhorn
       extraVolumeMounts:
         - name: rules
           mountPath: /rules
@@ -155,7 +152,7 @@ spec:
       replicas: 1
       persistence:
         size: 10Gi
-        storageClass: local-path
+        storageClass: longhorn
       extraVolumeMounts:
         - name: rules
           mountPath: /rules

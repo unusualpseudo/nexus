@@ -8,7 +8,7 @@ spec:
   path: ./kubernetes/apps/monitoring/loki/app
   dependsOn:
     - name: cluster-apps-external-secrets-stores
-    - name: cluster-apps-local-path-provisioner
+    - name: cluster-apps-longhorn
   prune: true
   sourceRef:
     kind: GitRepository
