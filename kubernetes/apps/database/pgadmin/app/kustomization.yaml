@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: database
 resources:
   - ./helmrelease.yaml
-  - ./externalsecret.yaml
+  - ./secrets.sops.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: pgadmin
