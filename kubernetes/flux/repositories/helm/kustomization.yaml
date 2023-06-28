@@ -24,3 +24,4 @@ resources:
   - grafana.yaml
   - cloudnative-pg.yaml
   - longhorn.yaml
+  - runix.yaml
