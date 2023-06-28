@@ -6,10 +6,7 @@ metadata:
   namespace: database
 spec:
   instances: 1
-  imageName: ghcr.io/cloudnative-pg/postgresql:14.7
-  inheritedMetadata:
-    labels:
-      kube-image-keeper.enix.io/image-caching-policy: ignore
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.2
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
@@ -18,3 +15,36 @@ spec:
     name: cloudnative-pg-secret
   monitoring:
     enablePodMonitor: true
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 8
+      destinationPath: s3://postgresql/
+      endpointURL: https://s3.${CLOUDFLARE_DOMAIN}
+      serverName: postgres-v1
+      s3Credentials:
+        accessKeyId:
+          name: cloudnative-pg-secret
+          key: minio-access-key-id
+        secretAccessKey:
+          name: cloudnative-pg-secret
+          key: minio-secret-access-key
+    bootstrap:
+    recovery:
+      source: postgres-v0
+  externalClusters:
+    - name: postgres-v0
+      barmanObjectStore:
+        destinationPath: s3://postgresql/
+        endpointURL: https://s3.${CLOUDFLARE_DOMAIN}
+        s3Credentials:
+          accessKeyId:
+            name: cloudnative-pg-secret
+            key: minio-access-key-id
+          secretAccessKey:
+            name: cloudnative-pg-secret
+            key: minio-secret-access-key
+        wal:
+          maxParallel: 8

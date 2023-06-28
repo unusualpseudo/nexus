@@ -1,0 +1,6 @@
+# Label worker nodes
+
+Plex is configured to run only on worker nodes, a node can be label as worker using the command :
+```sh
+kubectl label nodes worker_node node-role.kubernetes.io/worker=true
+```
