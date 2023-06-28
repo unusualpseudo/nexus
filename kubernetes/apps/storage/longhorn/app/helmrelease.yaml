@@ -35,6 +35,7 @@ spec:
       ingressClassName: nginx
       host: "longhorn.${CLOUDFLARE_DOMAIN}"
       tls: true
+      tlsSecret: "networking/${CLOUDFLARE_DOMAIN/./-}-production-tls"
     podSecurityContext:
       runAsUser: 120
       runAsGroup: 120

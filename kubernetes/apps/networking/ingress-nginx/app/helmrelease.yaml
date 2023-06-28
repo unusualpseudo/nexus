@@ -43,7 +43,7 @@ spec:
       ingressClassResource:
         defaut: true
       extraArgs:
-        default-ssl-certificate: "networking/${CLOUDFLARE_DOMAIN/./-}-staging-tls"
+        default-ssl-certificate: "networking/${CLOUDFLARE_DOMAIN/./-}-production-tls"
       config:
         client-body-buffer-size: "100M"
         client-body-timeout: 120
