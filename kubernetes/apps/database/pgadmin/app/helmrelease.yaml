@@ -27,8 +27,10 @@ spec:
     strategy:
       type: Recreate
     env:
-      email: ${PGADMIN_ADMIN_EMAIL}
+      email: ${ADMIN_EMAIL}
     existingSecret: pgadmin-secret
+    secretKeys:
+      pgadminPasswordKey: password
     ingress:
       enabled: true
       ingressClassName: nginx
@@ -44,7 +46,4 @@ spec:
       enabled: false
     persistentVolume:
       enabled: true
-      storageClass: longhorn
-      accessModes:
-        - ReadWriteOnce
-      size: 200Mi
+      existingClaim: pgadmin
