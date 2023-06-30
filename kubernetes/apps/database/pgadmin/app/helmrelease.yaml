@@ -45,5 +45,4 @@ spec:
     networkPolicy:
       enabled: false
     persistentVolume:
-      enabled: true
-      existingClaim: pgadmin
+      enabled: false
