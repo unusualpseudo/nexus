@@ -25,3 +25,4 @@ resources:
   - cloudnative-pg.yaml
   - longhorn.yaml
   - runix.yaml
+  - k8s-gateway.yaml
