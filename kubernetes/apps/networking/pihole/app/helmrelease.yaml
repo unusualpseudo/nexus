@@ -60,15 +60,16 @@ spec:
       https:
         enabled: true
         port: 443
-      type: ClusterIP
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+      annotations:
+        metallb.universe.tf/loadBalancerIPs: ${SVC_PIHOLE_ADDR}
 
     ingress:
       enabled: true
       ingressClassName: nginx
       annotations:
-        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-        external-dns.alpha.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
-      path: /admin
+        metallb.universe.tf/loadBalancerIPs: "${SVC_PIHOLE_ADDR}"
       hosts:
         - &host "pihole.${CLOUDFLARE_DOMAIN}"
       tls:
@@ -79,6 +80,7 @@ spec:
     persistentVolumeClaim:
       enabled: true
       existingClaim: pihole-pvc
+
 
     extraEnvVars:
       TZ: "${TIMEZONE}"

@@ -6,3 +6,13 @@
     - Staus:
         href: https://status.falsebit.io
         icon: gatus.png
+
+- Networking:
+    - Grafana:
+        href: https://${SVC_PIHOLE_ADDR}
+        icon: pihole.png
+        widget:
+          type: pihole
+          fields: ["queries", "blocked", "blocked_percent", "gravity"]
+          url: https://${SVC_PIHOLE_ADDR}
+          key: ${PIHOLE_API_KEY}

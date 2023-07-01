@@ -18,12 +18,6 @@
       cpu: true
       memory: true
       showLabel: true
-- openmeteo:
-    label: Home
-    latitude: ${LATITUDE}
-    longitude: ${LONGITUDE}
-    units: metric
-    cache: 5
 - datetime:
     text_size: xl
     format:
