@@ -15,6 +15,7 @@ spec:
         name: pihole
         namespace: flux-system
   values:
+
     probes:
       liveness:
         enabled: true
@@ -30,8 +31,17 @@ spec:
         timeoutSeconds: 5
         port: http
         scheme: HTTP
+
+    admin:
+      existingSecret: &secret pihole-secret
+      passwordKey: adminPassword
+
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *secret
+
     dualStack:
       enabled: false
+
     serviceDns:
       mixedService: true
       type: LoadBalancer
@@ -39,8 +49,10 @@ spec:
       externalTrafficPolicy: Local
       annotations:
         metallb.universe.tf/loadBalancerIPs: ${SVC_PIHOLE_ADDR}
+
     serviceDhcp:
       enabled: false
+
     serviceWeb:
       http:
         enabled: true
@@ -49,6 +61,7 @@ spec:
         enabled: true
         port: 443
       type: ClusterIP
+
     ingress:
       enabled: true
       ingressClassName: nginx
@@ -62,21 +75,16 @@ spec:
         - secretName: "${CLOUDFLARE_DOMAIN/./-}-production-tls"
           hosts:
             - *host
+
     persistentVolumeClaim:
       enabled: true
       existingClaim: pihole-pvc
-    admin:
-      existingSecret: &secret pihole-secret
-      passwordKey: adminPassword
+
     extraEnvVars:
       TZ: "${TIMEZONE}"
+
     DNS1: "1.1.1.1"
     DNS2: "8.8.8.8"
-    dnsmasq:
-      customDnsEntries:
-        - address=/s3.${CLOUDFLARE_DOMAIN}/${METALLB_INGRESS_ADDR}
-        - address=/portainer.${CLOUDFLARE_DOMAIN}/${METALLB_INGRESS_ADDR}
-        - address=/pgadmin.${CLOUDFLARE_DOMAIN}/${METALLB_INGRESS_ADDR}
 
     adlists:
       # DEFAULT LISTS
@@ -134,5 +142,3 @@ spec:
       - https://raw.githubusercontent.com/AssoEchap/stalkerware-indicators/master/generated/hosts
       - https://urlhaus.abuse.ch/downloads/hostfile/
       - https://v.firebog.net/hosts/Prigent-Malware.txt
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *secret
