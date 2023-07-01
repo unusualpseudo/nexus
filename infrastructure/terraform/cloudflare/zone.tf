@@ -1,3 +1,4 @@
+
 resource "cloudflare_zone_settings_override" "cloudflare_settings" {
   zone_id = lookup(data.cloudflare_zones.domain.zones[0], "id")
   settings {
@@ -12,7 +13,7 @@ resource "cloudflare_zone_settings_override" "cloudflare_settings" {
     browser_check  = "on"
     challenge_ttl  = 1800
     privacy_pass   = "on"
-    security_level = "medium"
+    security_level = "high"
     # /speed/optimization
     brotli = "on"
     minify {

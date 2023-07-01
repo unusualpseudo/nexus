@@ -43,8 +43,6 @@ spec:
     service:
       main:
         type: LoadBalancer
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: "vector.${CLOUDFLARE_DOMAIN}"
         externalIPs: ["${SVC_VECTOR_ADDR}"]
         externalTrafficPolicy: Local
         ports:

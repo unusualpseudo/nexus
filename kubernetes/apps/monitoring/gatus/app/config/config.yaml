@@ -1,13 +1,16 @@
 ---
+
 storage:
   type: postgres
   path: postgres://${INIT_POSTGRES_USER}:${INIT_POSTGRES_PASS}@${INIT_POSTGRES_HOST}:5432/${INIT_POSTGRES_DBNAME}?sslmode=disable
   caching: true
+
 metrics: true
-debug: false
+
 ui:
   title: Status | Gatus
   header: Status
+
 alerting:
   pushover:
     application-token: ${PUSHOVER_APP_TOKEN}
@@ -17,15 +20,28 @@ alerting:
       send-on-resolved: true
       failure-threshold: 5
       success-threshold: 2
+
 connectivity:
   checker:
     target: 1.1.1.1:53
-    interval: 30m
+    interval: 5m
+
 endpoints:
-  - name: status
+  - name: grafana
     group: external
-    url: https://status.${CLOUDFLARE_DOMAIN}
-    interval: 30m
+    url: https://grafana.${CLOUDFLARE_DOMAIN}/api/health
+    interval: 5m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: pushover
+
+  - name: homepage
+    group: external
+    url: https://homepage.${CLOUDFLARE_DOMAIN}
+    interval: 5m
     client:
       dns-resolver: tcp://1.1.1.1:53
     conditions:
