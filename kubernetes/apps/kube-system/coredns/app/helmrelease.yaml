@@ -77,7 +77,7 @@ spec:
           - name: prometheus
             parameters: 0.0.0.0:9153
           - name: forward
-            parameters: . ${SVC_PIHOLE_ADDR}
+            parameters: . ${SVC_PIHOLE_ADDR} 1.1.1.1
           - name: cache
             parameters: 30
           - name: loop

@@ -86,6 +86,9 @@ spec:
     DNS1: "1.1.1.1"
     DNS2: "8.8.8.8"
 
+    podDnsConfig:
+      enabled: false
+
     adlists:
       # DEFAULT LISTS
       - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
