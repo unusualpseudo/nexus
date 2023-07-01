@@ -20,12 +20,12 @@ alerting:
 connectivity:
   checker:
     target: 1.1.1.1:53
-    interval: 1m
+    interval: 30m
 endpoints:
   - name: status
     group: external
     url: https://status.${CLOUDFLARE_DOMAIN}
-    interval: 1m
+    interval: 30m
     client:
       dns-resolver: tcp://1.1.1.1:53
     conditions:
