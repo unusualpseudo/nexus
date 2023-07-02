@@ -1,0 +1,11 @@
+---
+originRequest:
+  http2Origin: true
+
+# Internet --> cloudflared tunnel --> local DNS (split-horizon DNS) --> ingress --> service
+ingress:
+  - hostname: "*.${CLOUDFLARE_DOMAIN}"
+    service: https://ingress-nginx-controller.networking.svc.cluster.local:443
+    originRequest:
+      originServerName: "ingress.${CLOUDFLARE_DOMAIN}"
+  - service: http_status:404

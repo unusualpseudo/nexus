@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.3.2
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,29 +23,56 @@ spec:
     remediation:
       retries: 5
   values:
+
+
+    image:
+      repository: docker.io/cloudflare/cloudflared
+      tag: 2023.6.1
+
+
     global:
       nameOverride: *app
+
     controller:
       replicas: 1
-    image:
-      repository: cloudflare/cloudflared
-      tag: 2023.4.1
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+
+
+    env:
+      NO_AUTOUPDATE: "true"
+      TUNNEL_CRED_FILE: /etc/cloudflared/creds/creds.json
+      TUNNEL_METRICS: 0.0.0.0:8080
+      TUNNEL_TRANSPORT_PROTOCOL: auto
+
     args:
       - tunnel
       - --config
-      - /etc/cloudflared/config.yaml
-      - --metrics
-      - 0.0.0.0:9090
+      - /etc/cloudflared/config/config.yaml
       - run
+      - "${CLOUDFLARE_TUNNEL_ID}"
+
     ingress:
       main:
         enabled: false
+
     service:
       main:
         nameOverride: metrics
         ports:
           http:
-            port: 9090
+            port: 8080
+
+    serviceMonitor:
+      main:
+        enabled: true
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 30s
     persistence:
       config:
         enabled: true
@@ -54,21 +81,21 @@ spec:
         type: custom
         volumeSpec:
           configMap:
-            name: &config cloudflare-tunnel
+            name: &config cloudflared-config
         subPath:
           - path: config.yaml
-            mountPath: /etc/cloudflared/config.yaml
+            mountPath: /etc/cloudflared/config/config.yaml
             readOnly: true
-      credentials:
+      creds:
         enabled: true
         readOnly: true
         type: custom
         volumeSpec:
           secret:
-            secretName: &secret cloudflare-tunnel-secret
+            secretName: &secret cloudflared-secret
         subPath:
-          - path: cred.json
-            mountPath: /etc/cloudflared/cred.json
+          - path: creds.json
+            mountPath: /etc/cloudflared/creds/creds.json
             readOnly: true
     resources:
       requests:

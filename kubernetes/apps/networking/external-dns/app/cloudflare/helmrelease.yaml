@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app external-dns
+  name: &app external-dns-cloudflare
   namespace: networking
 spec:
   interval: 30m
@@ -10,12 +10,12 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 1.12.2
+      version: 1.13.0
       sourceRef:
         kind: HelmRepository
         name: external-dns
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 1
   install:
     createNamespace: true
     remediation:
@@ -31,39 +31,31 @@ spec:
     provider: cloudflare
     policy: sync
     txtPrefix: "k8s."
+    fullnameOverride: *app
     sources:
       - ingress
+      - crd
     domainFilters:
       - "${CLOUDFLARE_DOMAIN}"
     env:
       - name: CF_API_EMAIL
         valueFrom:
           secretKeyRef:
-            name: external-dns-secret
+            name: external-dns-cloudflare-secret
             key: email
       - name: CF_API_KEY
         valueFrom:
           secretKeyRef:
-            name: external-dns-secret
-            key: api-key
+            name: external-dns-cloudflare-secret
+            key: apiKey
     extraArgs:
-      - --cloudflare-proxied
       - --annotation-filter=external-dns.alpha.kubernetes.io/target
-    rbac:
-      additionalPermissions:
-        - apiGroups: ["externaldns.k8s.io"]
-          resources: ["dnsendpoints"]
-          verbs: ["get", "watch", "list"]
-        - apiGroups: ["externaldns.k8s.io"]
-          resources: ["dnsendpoints/status"]
-          verbs: ["*"]
-    resources:
-      requests:
-        memory: 100Mi
-        cpu: 25m
-      limits:
-        memory: 250Mi
+      - --cloudflare-proxied
+      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+      - --crd-source-kind=DNSEndpoint
     metrics:
       enabled: true
+    serviceMonitor:
+      enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-secret
+      secret.reloader.stakater.com/reload: external-dns-cloudflare-secret

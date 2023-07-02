@@ -68,6 +68,7 @@ spec:
       ingressClassName: nginx
       annotations:
         metallb.universe.tf/loadBalancerIPs: "${SVC_PIHOLE_ADDR}"
+      path: /admin
       hosts:
         - &host "pihole.${CLOUDFLARE_DOMAIN}"
       tls:
