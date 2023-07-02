@@ -24,13 +24,13 @@ alerting:
 connectivity:
   checker:
     target: 1.1.1.1:53
-    interval: 5m
+    interval: 1m
 
 endpoints:
   - name: grafana
     group: external
     url: https://grafana.${CLOUDFLARE_DOMAIN}/api/health
-    interval: 5m
+    interval: 1m
     client:
       dns-resolver: tcp://1.1.1.1:53
     conditions:
@@ -41,7 +41,7 @@ endpoints:
   - name: homepage
     group: external
     url: https://homepage.${CLOUDFLARE_DOMAIN}
-    interval: 5m
+    interval: 1m
     client:
       dns-resolver: tcp://1.1.1.1:53
     conditions:
@@ -57,5 +57,95 @@ endpoints:
       dns-resolver: tcp://1.1.1.1:53
     conditions:
       - "[STATUS] == 200"
+    alerts:
+      - type: pushover
+
+  - name: portainer
+    group: internal
+    url: 1.1.1.1
+    interval: 1m
+    dns:
+      query-name: portainer.${CLOUDFLARE_DOMAIN}
+      query-type: A
+    conditions:
+      - "len([BODY]) == 0"
+    alerts:
+      - type: pushover
+
+
+  - name: gitops
+    group: internal
+    url: 1.1.1.1
+    interval: 1m
+    dns:
+      query-name: gitops.${CLOUDFLARE_DOMAIN}
+      query-type: A
+    conditions:
+      - "len([BODY]) == 0"
+    alerts:
+      - type: pushover
+
+
+  - name: pihole
+    group: internal
+    url: 1.1.1.1
+    interval: 1m
+    dns:
+      query-name: pihole.${CLOUDFLARE_DOMAIN}
+      query-type: A
+    conditions:
+      - "len([BODY]) == 0"
+    alerts:
+      - type: pushover
+
+
+  - name: kubernetes
+    group: internal
+    url: 1.1.1.1
+    interval: 1m
+    dns:
+      query-name: kubernetes.${CLOUDFLARE_DOMAIN}
+      query-type: A
+    conditions:
+      - "len([BODY]) == 0"
+    alerts:
+      - type: pushover
+
+
+  - name: pgadmin
+    group: internal
+    url: 1.1.1.1
+    interval: 1m
+    dns:
+      query-name: pgadmin.${CLOUDFLARE_DOMAIN}
+      query-type: A
+    conditions:
+      - "len([BODY]) == 0"
+    alerts:
+      - type: pushover
+
+
+  - name: minio
+    group: internal
+    url: 1.1.1.1
+    interval: 1m
+    dns:
+      query-name: minio.${CLOUDFLARE_DOMAIN}
+      query-type: A
+    conditions:
+      - "len([BODY]) == 0"
+    alerts:
+      - type: pushover
+
+
+  - name: longhorn
+    group: internal
+    url: 1.1.1.1
+    interval: 1m
+    dns:
+      query-name: longhorn.${CLOUDFLARE_DOMAIN}
+      query-type: A
+    conditions:
+      - "len([BODY]) == 0"
     alerts:
       - type: pushover

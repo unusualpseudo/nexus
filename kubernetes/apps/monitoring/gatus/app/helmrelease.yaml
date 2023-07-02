@@ -46,6 +46,7 @@ spec:
       TZ: ${TIMEZONE}
       GATUS_CONFIG_PATH: /config
       CLOUDFLARE_DOMAIN: ${CLOUDFLARE_DOMAIN}
+      PIHOLE_DNS: ${SVC_PIHOLE_ADDR}
 
     envFrom: *envFrom
 
