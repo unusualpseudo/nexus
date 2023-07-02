@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
-  maxHistory: 2
+  maxHistory: 1
   install:
     createNamespace: true
     remediation:
