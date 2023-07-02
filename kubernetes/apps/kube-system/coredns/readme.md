@@ -42,4 +42,4 @@ kubectl -n kube-system patch configmap coredns --type=merge -p '{"metadata": {"a
 kubectl -n kube-system patch configmap coredns --type=merge -p '{"metadata": {"labels": {"app.kubernetes.io/managed-by": "Helm"}}}'
 ```
 
-[Reference](https://github.com/haraldkoch/kochhaus-home/blob/main/cluster/core/kube-system/coredns/readme.md)
+[Reference](https://github.com/haraldkoch/kochhaus-home/tree/main/kubernetes/apps/kube-system/coredns/app)
