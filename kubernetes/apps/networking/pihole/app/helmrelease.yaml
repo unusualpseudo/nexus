@@ -68,6 +68,7 @@ spec:
       ingressClassName: nginx
       annotations:
         metallb.universe.tf/loadBalancerIPs: "${SVC_PIHOLE_ADDR}"
+        external-dns.alpha.kubernetes.io/internal: true
       path: /admin
       hosts:
         - &host "pihole.${CLOUDFLARE_DOMAIN}"

@@ -36,6 +36,7 @@ spec:
             key: pihole-password
     extraArgs:
       - --pihole-server=http://pihole-web.networking.svc.cluster.local
+      - --annotation-filter=external-dns.alpha.kubernetes.io/exclude notin (true)
     policy: upsert-only
     sources:
       - ingress

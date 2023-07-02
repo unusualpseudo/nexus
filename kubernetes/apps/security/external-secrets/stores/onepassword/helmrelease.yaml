@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: onepassword-connect
-  namespace: kube-system
+  namespace: security
 spec:
   interval: 15m
   chart:
@@ -71,6 +71,8 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
+        annotations:
+          external-dns.alpha.kubernetes.io/exclude: 'true'
         hosts:
           - host: &host "{{ .Release.Name }}.${CLOUDFLARE_DOMAIN}"
             paths:
