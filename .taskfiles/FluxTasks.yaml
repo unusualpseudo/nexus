@@ -77,6 +77,12 @@ tasks:
     cmds:
       - kubectl get kustomizations {{.CLI_ARGS | default "-A"}}
 
+  ks-watch:
+    desc: List all the kustomizations in your cluster
+    cmds:
+      - watch kubectl get kustomizations {{.CLI_ARGS | default "-A"}}
+
+
   hr:
     desc: List all the helmreleases in your cluster
     cmds:
