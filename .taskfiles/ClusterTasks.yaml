@@ -6,12 +6,42 @@ vars:
   ANSIBLE_INVENTORY_DIR: "{{.ANSIBLE_DIR}}/inventory"
 
 tasks:
-  ansible:init:
+  ansible-init:
     desc: Install/Upgrade Ansible galaxy dependencies
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible-galaxy install -r requirements.yaml --roles-path ~/.ansible/roles --force
       - ansible-galaxy collection install -r requirements.yaml --collections-path ~/.ansible/collections --force
+
+  prepare:
+    desc: Prepare hosts OS
+    dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
+    cmds:
+      - ansible-playbook prepare.yaml
+
+  install:
+    desc: K3s install
+    dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
+    cmds:
+      - ansible-playbook install.yaml
+
+  nuke:
+    desc: K3s Nuke
+    dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
+    cmds:
+      - ansible-playbook nuke.yaml
+
+  reboot:
+    desc: Reboot all the k8s nodes
+    dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
+    cmds:
+      - ansible-playbook reboot-nodes.yaml
+
+  poweroff:
+    desc: Shutdown all the k8s nodes
+    dir: "{{.ANSIBLE_DIR}}"
+    cmds:
+      - ansible kubernetes -a '/usr/bin/systemctl poweroff' --become
 
   list:
     desc: List kubernetes hosts
@@ -21,40 +51,12 @@ tasks:
 
   ping:
     desc: Ping kubernetes hosts
+    dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible kubernetes -m 'ping'
 
   uptime:
     desc: Uptime kubernetes all hosts
+    dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible kubernetes --one-line -a 'uptime'
-
-  prepare:
-    desc: Prepare hosts OS
-    dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
-    cmds:
-      - ansible-playbook cluster/prepare.yaml
-
-  install:
-    desc: K3s install
-    dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
-    cmds:
-      - ansible-playbook k3s/install.yaml
-
-  nuke:
-    desc: K3s Nuke
-    dir: "{{.ANSIBLE_PLAYBOOK_DIR}}"
-    cmds:
-      - ansible-playbook k3s/nuke.yaml
-
-  reboot:
-    desc: Reboot all the k8s nodes
-    dir: "{{.ANSIBLE_DIR}}"
-    cmds:
-      - ansible-playbook {{.ANSIBLE_PLAYBOOK_DIR}}/cluster/reboot-nodes.yaml
-
-  poweroff:
-    desc: Shutdown all the k8s nodes
-    dir: "{{.ANSIBLE_DIR}}"
-    cmds:
-      - ansible kubernetes -a '/usr/bin/systemctl poweroff' --become

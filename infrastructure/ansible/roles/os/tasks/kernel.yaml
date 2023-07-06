@@ -1,29 +1,4 @@
 ---
-- name: System inotify Configuration | Set sysctls
-  ansible.posix.sysctl:
-    name: "{{ item.key }}"
-    value: "{{ item.value }}"
-    sysctl_file: /etc/sysctl.d/99-kubernetes.conf
-    reload: true
-  with_dict: "{{ sysctl_config }}"
-  vars:
-    sysctl_config:
-      fs.inotify.max_user_watches: 524288
-      fs.inotify.max_user_instances: 512
-
-- name: System Configuration | Disable swap at runtime
-  ansible.builtin.command: swapoff -a
-  when: ansible_swaptotal_mb > 0
-
-- name: System Configuration | Disable swap at boot
-  ansible.posix.mount:
-    name: "{{ item }}"
-    fstype: swap
-    state: absent
-  loop:
-    - swap
-    - none
-
 - name: System Configuration | Enable kernel modules runtime
   modprobe:
     name: "{{ item }}"
@@ -43,13 +18,6 @@
     - overlay
     - rbd
 
-- name: System Configuration | Disable swap at boot
-  ansible.posix.mount:
-    name: "{{ item }}"
-    fstype: swap
-    state: absent
-  loop: ["none", "swap"]
-
 - name: System Configuration | Disable mitigations
   ansible.builtin.replace:
     path: /etc/default/grub
@@ -65,13 +33,6 @@
 - name: System Configuration | Reconfigure grub and initramfs
   ansible.builtin.command: update-grub
   when: grub_status.changed
-
-- name: System Configuration | Select default locale
-  debconf:
-    name: locales
-    question: locales/default_environment_locale
-    value: en_US.UTF-8
-    vtype: select
 
 - name: System Configuration | Check if mitigations is disabled
   shell: grep "GRUB_CMDLINE_LINUX=" /etc/default/grub | grep -c "mitigations=off"
@@ -93,3 +54,11 @@
   command: update-grub
   when:
     - mitigations_status.stdout == "0"
+
+
+- name: System Configuration | Select default locale
+  debconf:
+    name: locales
+    question: locales/default_environment_locale
+    value: en_US.UTF-8
+    vtype: select

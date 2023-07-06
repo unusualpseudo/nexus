@@ -9,7 +9,7 @@ metadata:
 provisioner: nfs.csi.k8s.io
 parameters:
   server: ${NFS_SERVER_ADDR}
-  share: /nfs-pool/Apps/MinioIO
+  share: /nas/Apps/MinioIO
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 allowVolumeExpansion: true

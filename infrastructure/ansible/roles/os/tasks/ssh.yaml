@@ -1,4 +1,13 @@
 ---
+- name: SSH | Download GitHub public SSH keys
+  become: true
+  get_url:
+    url: "https://github.com/{{ github_username }}.keys"
+    dest: "/home/{{ ansible_user }}/.ssh/authorized_keys"
+    mode: "0600"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
 - name: SSH | Check if cloud-init SSH configuration exits
   stat:
     path: /etc/ssh/sshd_config.d/50-cloud-init.conf
@@ -43,6 +52,7 @@
       line: "AllowAgentForwarding no"
     - regexp: "^#?AllowUsers"
       line: "AllowUsers {{ ansible_user }}"
+    - regexp: '^#?\s*Port\s'
+      line: "Port {{ ssh_port }}"
     - regexp: "^#?Banner"
       line: "Banner /etc/ssh/ssh_banner.txt"
-  notify: Restart sshd

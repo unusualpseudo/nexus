@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: "${NFS_SERVER_ADDR}"
-    path: /nfs-pool/Apps/MinioIO
+    path: /nas/Apps/MinioIO
   mountOptions:
     - nfsvers=4.2
     - nconnect=8

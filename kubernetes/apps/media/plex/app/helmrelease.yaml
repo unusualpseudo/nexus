@@ -66,7 +66,7 @@ spec:
         enabled: true
         type: nfs
         server: "${NFS_SERVER_ADDR}"
-        path: /nfs-pool/Apps/Media
+        path: /nas/Apps/Media
         mountPath: /media
       transcode:
         enabled: true
@@ -77,9 +77,9 @@ spec:
         mountPath: /.local
 
     podSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
 
     nodeSelector:
       node-role.kubernetes.io/worker: "true"

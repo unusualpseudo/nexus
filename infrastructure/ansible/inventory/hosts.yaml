@@ -1,11 +1,18 @@
 ---
-kubernetes:
+all:
+  vars:
+    ansible_user: spike
+    ansible_port: 1595
   children:
-    master:
-      hosts:
-        horizon:
-          ansible_host: 192.168.1.39
-    worker:
-      hosts:
-        quasar:
-          ansible_host: 192.168.1.100
+    kubernetes:
+      children:
+        master:
+          hosts:
+            horizon:
+              ansible_host: 192.168.1.39
+        worker:
+          hosts:
+            quasar:
+              ansible_host: 192.168.1.100
+            dot:
+              ansible_host: 192.168.1.101

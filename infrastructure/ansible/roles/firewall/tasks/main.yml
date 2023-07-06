@@ -1,6 +1,0 @@
----
-- name: Setup Iptables
-  import_tasks: ip_tables.yaml
-
-- name: Setup fail2ban
-  import_tasks: fail2ban.yaml

@@ -1,15 +1,15 @@
 ---
-- name: System Network Configuration | Update hostname
+- name: Network Configuration | Update hostname
   hostname:
     name: "{{ inventory_hostname }}"
 
-- name: System Network Configuration |Update /etc/hosts to include hostname
+- name: Network Configuration |Update /etc/hosts to include hostname
   blockinfile:
     path: /etc/hosts
     block: |
       127.0.1.1 {{ inventory_hostname }}
 
-- name: System Network Configuration | Set sysctls
+- name: Network Configuration | Set sysctls
   ansible.posix.sysctl:
     name: "{{ item.key }}"
     value: "{{ item.value }}"

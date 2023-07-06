@@ -1,7 +1,10 @@
 ---
-public_ssh_keys:
-  -"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICMXNU/Lt9esC8WL5I0GXwop3mS92S2grZcTxhN8fh1m spike@shiva"
-server_distribution: jammy
+# To copy ssh keys from github
+github_username: unusualpseudo
+
+# Change ssh default port
+ssh_port: 1595
+
 apt_install_packages:
   - curl
   - wget
@@ -11,41 +14,26 @@ apt_install_packages:
   - software-properties-common
   - python3-pip
   - python3-setuptools
-  - tmux
+  - python3-kubernetes
+  - python3-yaml
   - net-tools
-  - arptables
   - gdisk
   - fdisk
   - htop
-  - unattended-upgrades
+  - fish
   - unzip
-  - sudo
-  - python3-kubernetes
-  - python3-yaml
   - smartmontools
+  - arptables
+  - nfs-common
+  - lvm2
+  - open-iscsi
 
 apt_remove_packages:
-  - cloud-init
-  - cloud-guest-utils
-  - cloud-initramfs-copymods
-  - cloud-initramfs-dyn-netconf
-  - friendly-recovery
-  - fwupd
-  - landscape-common
-  - lxd-agent-loader
-  - ntfs-3g
-  - open-vm-tools
-  - popularity-contest
-  - snapd
-  - sosreport
-  - ubuntu-advantage-tools
   - ufw
-  - vim.tiny
   - unattended-upgrades
   - apparmor
 
 timezone: "Europe/Paris"
-
 # Add cloudflare ntp server
 ntp_servers:
   primary:

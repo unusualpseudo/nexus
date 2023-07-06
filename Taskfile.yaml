@@ -19,6 +19,7 @@ includes:
   cluster: ./.taskfiles/ClusterTasks.yaml
   k8s: ./.taskfiles/Kubernetes.yaml
   secrets: ./.taskfiles/ExternalSecrets.yaml
+  storage: ./.taskfiles/Storage.yaml
 tasks:
   default:
     silent: true
