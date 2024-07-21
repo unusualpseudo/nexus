@@ -42,4 +42,3 @@ helm repo add coredns https://coredns.github.io/helm
   kubectl -n kube-system patch configmap coredns --type=merge -p '{"metadata": {"labels": {"app.kubernetes.io/managed-by": "Helm"}}}'
 ```
 
-[Reference](https://github.com/haraldkoch/kochhaus-home/tree/main/kubernetes/apps/kube-system/coredns/app)
