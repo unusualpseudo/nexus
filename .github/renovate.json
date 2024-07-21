@@ -13,15 +13,9 @@
     "github>unusualpseudo/nexus//.github/renovate/semanticCommits.json",
     "github>unusualpseudo/nexus//.github/renovate/commitMessage.json"
   ],
-  "platform": "github",
   "commitBodyTable": true,
   "recreateClosed": true,
-  "onboarding": false,
-  "username": "unusualpseudo",
   "gitAuthor": "unusualpseudo <unusualpseudo@users.noreply.github.com>",
-  "repositories": [
-    "unusualpseudo/nexus"
-  ],
   "timezone": "Europe/Paris",
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
