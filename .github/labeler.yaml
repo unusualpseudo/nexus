@@ -1,6 +1,6 @@
 ---
 ansible:
-  - "infrastructure/ansible/**/*"
+  - "infrastructure/infrastructure/ansible/**/*"
 terraform/aws:
   - "infrastructure/terraform/aws/*"
 terraform/cloudflare:
