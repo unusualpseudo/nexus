@@ -8,14 +8,13 @@
     ":enablePreCommit",
     ":automergeDigest",
     ":automergeBranchPush",
-    "github>unusualpseudo/nexus//.github/renovate/autoMerge.json",
-    "github>unusualpseudo/nexus//.github/renovate/labels.json",
-    "github>unusualpseudo/nexus//.github/renovate/semanticCommits.json",
-    "github>unusualpseudo/nexus//.github/renovate/commitMessage.json"
+    "github>unusualpseudo/homelab//.github/renovate/autoMerge.json",
+    "github>unusualpseudo/homelab//.github/renovate/labels.json",
+    "github>unusualpseudo/homelab//.github/renovate/semanticCommits.json",
+    "github>unusualpseudo/homelab//.github/renovate/commitMessage.json"
   ],
   "commitBodyTable": true,
   "recreateClosed": true,
-  "gitAuthor": "unusualpseudo <unusualpseudo@users.noreply.github.com>",
   "timezone": "Europe/Paris",
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",

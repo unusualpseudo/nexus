@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+  namespace: flux-system
+data:
+  TIMEZONE: "Europe/Paris"
+  METALLB_IP_RANGE: '192.168.1.200-192.168.1.220'
+  METALLB_INGRESS_ADDR: '192.168.1.210'
+  NFS_SERVER_ADDR: '192.168.1.49'
+  SVC_VECTOR_ADDR: '192.168.1.209'
+  SVC_PLEX_ADDR: '192.168.1.215'
+  SVC_POSTGRES_ADDR: '192.168.1.220'
+  DISCORD_CHANNEL: "cicd"

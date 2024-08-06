@@ -6,6 +6,7 @@ tasks:
   kubeconfig:
     desc: Download kubeconfig from a remote k3s master node
     cmds:
-      - rsync --verbose --progress --partial -e "ssh -p ${MASTER_PORT}" --rsync-path="sudo rsync" ${MASTER_USERNAME}@${MASTER_HOST}:/etc/rancher/k3s/k3s.yaml "${KUBECONFIG}"
-      - sed -i "s/127.0.0.1/${MASTER_HOST}/g" "${KUBECONFIG}"
+      - rsync --verbose --progress --partial -e "ssh -p ${CONTROL_NODE_SSH_PORT}" --rsync-path="sudo rsync" ${CONTROL_NODE_USER}@${CONTROL_NODE_ADDR}:/etc/rancher/k3s/k3s.yaml "${KUBECONFIG}"
+      - sed -i "s/127.0.0.1/${CONTROL_NODE_ADDR}/g" "${KUBECONFIG}"
+      - sed -i "s/default/${CLUSTER}/g" "${KUBECONFIG}"
       - chmod go-r "${KUBECONFIG}"

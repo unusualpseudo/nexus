@@ -1,4 +1,0 @@
----
-handlers:
-  - name: restart sshd
-  - name: Reboot host and wait for it to restart

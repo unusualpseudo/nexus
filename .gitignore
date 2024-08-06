@@ -1,14 +1,8 @@
-# Terraform
-.terraform
-.terraform.tfstate*
-terraform.tfstate*
-*.terraform.lock.hcl
 
 # Environments
 .envrc
 
-#  visual studio code
-*.code-workspace
 kubeconfig
 
+.idea/
 *.pem

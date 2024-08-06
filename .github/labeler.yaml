@@ -1,11 +1,3 @@
 ---
-ansible:
-  - "infrastructure/infrastructure/ansible/**/*"
-terraform/aws:
-  - "infrastructure/terraform/aws/*"
-terraform/cloudflare:
-  - "infrastructure/terraform/cloudflare/*"
-terraform/github:
-  - "infrastructure/terraform/github/*"
 github-actions:
   - ".github/**/*"

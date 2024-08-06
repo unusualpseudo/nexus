@@ -1,6 +1,0 @@
----
-packages_install:
-  - zfs-zed
-  - zfsutils-linux
-  - nfs-common
-  - nfs-kernel-server
